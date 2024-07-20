@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Login = () => {
@@ -23,7 +22,6 @@ const Login = () => {
       } else if (role === 'hr_head') {
         navigate('/all-employees');
       }
-      window.location.reload(); // Reload the page to ensure the App component re-renders
     } catch (error) {
       console.error(error);
       setError('Invalid name or password');
