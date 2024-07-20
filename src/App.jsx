@@ -11,7 +11,6 @@ import SkillDetail from './components/HRHead/SkillDetail';
 import ManageJobPositions from './components/HRHead/ManageJobPositions';
 import SkillMatrix from './components/HRHead/SkillMatrix';
 
-
 const App = () => {
   const [token, setToken] = useState(null);
   const [role, setRole] = useState(null);
@@ -61,7 +60,7 @@ const App = () => {
             <Route path="/skills-matrix" element={<Navigate to="/profile" />} />
           </>
         )}
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to={token ? (role === 'hr_head' ? "/all-employees" : "/profile") : "/login"} />} />
       </Routes>
     </Router>
   );
