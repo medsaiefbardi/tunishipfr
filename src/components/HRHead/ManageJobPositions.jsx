@@ -42,7 +42,7 @@ const ManageJobPositions = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/job-positions`, {
+        const res = await axios.get(`${apiUrl}/api/job-positions`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -61,7 +61,7 @@ const ManageJobPositions = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/skills`, {
+        const res = await axios.get(`${apiUrl}/api/skills`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -117,7 +117,7 @@ const ManageJobPositions = () => {
         'Content-Type': 'application/json'
       };
 
-      const res = await axios.post(`https://localhost:5000/api/job-positions`, newJobPosition, { headers });
+      const res = await axios.post(`${apiUrl}/api/job-positions`, newJobPosition, { headers });
       setJobPositions([...jobPositions, res.data]);
       setNewJobPosition({
         title: '',
@@ -157,7 +157,7 @@ const ManageJobPositions = () => {
         'Content-Type': 'application/json'
       };
 
-      const res = await axios.put(`https://localhost:5000/api/job-positions/${selectedJobPosition._id}`, selectedJobPosition, { headers });
+      const res = await axios.put(`${apiUrl}/api/job-positions/${selectedJobPosition._id}`, selectedJobPosition, { headers });
       setJobPositions(jobPositions.map(jp => jp._id === res.data._id ? res.data : jp));
       setSelectedJobPosition(null);
     } catch (error) {
@@ -173,7 +173,7 @@ const ManageJobPositions = () => {
         'Content-Type': 'application/json'
       };
 
-      await axios.delete(`https://localhost:5000/api/job-positions/${id}`, { headers });
+      await axios.delete(`${apiUrl}/api/job-positions/${id}`, { headers });
       setJobPositions(jobPositions.filter(jp => jp._id !== id));
     } catch (error) {
       console.error(error.message);

@@ -10,9 +10,7 @@ import ManageSkills from './components/HRHead/ManageSkills';
 import SkillDetail from './components/HRHead/SkillDetail';
 import ManageJobPositions from './components/HRHead/ManageJobPositions';
 import SkillMatrix from './components/HRHead/SkillMatrix';
-import {disableReactDevTools} from '@fvilers/disable-react-devtools';
 
-if (ProcessingInstruction.env.NODE_ENV === "production") disableReactDevTools()
 
 const App = () => {
   const [token, setToken] = useState(null);

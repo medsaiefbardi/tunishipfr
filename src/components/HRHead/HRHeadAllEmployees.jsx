@@ -29,7 +29,7 @@ const HRHeadAllEmployees = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/employees`, {
+        const res = await axios.get(`${apiUrl}/api/employees`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -49,7 +49,7 @@ const HRHeadAllEmployees = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/job-position`, {
+        const res = await axios.get(`${apiUrl}/api/job-position`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -69,7 +69,7 @@ const HRHeadAllEmployees = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/skills`, {
+        const res = await axios.get(`${apiUrl}/api/skills`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -100,7 +100,7 @@ const HRHeadAllEmployees = () => {
         'Content-Type': 'application/json'
       };
 
-      const res = await axios.post(`https://localhost:5000/api/employees`, newEmployee, { headers });
+      const res = await axios.post(`${apiUrl}/api/employees`, newEmployee, { headers });
       setEmployees([...employees, res.data]);
       setNewEmployeeVisible(false);
       setNewEmployee({
@@ -124,7 +124,7 @@ const HRHeadAllEmployees = () => {
         'Content-Type': 'application/json'
       };
 
-      await axios.delete(`https://localhost:5000/api/employees/${id}`, { headers });
+      await axios.delete(`${apiUrl}/api/employees/${id}`, { headers });
       setEmployees(employees.filter(emp => emp._id !== id));
     } catch (error) {
       console.error('Error deleting employee:', error.message);
@@ -157,7 +157,7 @@ const HRHeadAllEmployees = () => {
         skills: skills.map(({ skill, level }) => ({ skill: skill._id || skill, level }))
       };
 
-      const res = await axios.put(`https://localhost:5000/api/employees/${_id}`, payload, { headers });
+      const res = await axios.put(`${apiUrl}/api/employees/${_id}`, payload, { headers });
       setEmployees(employees.map(emp => emp._id === selectedEmployee._id ? res.data : emp));
       setSelectedEmployee(null);
     } catch (error) {

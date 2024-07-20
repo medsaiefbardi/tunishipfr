@@ -14,7 +14,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`https://localhost:5000/api/auth/login`, { name, password });
+      const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
       console.log('data', res.data);
       localStorage.setItem('token', res.data.token);
       const role = res.data.role;

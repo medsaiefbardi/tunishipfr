@@ -18,7 +18,7 @@ const Register = () => {
   useEffect(() => {
     const fetchJobPositions = async () => {
       try {
-        const res = await axios.get(`https://localhost:5000/api/job-positions`);
+        const res = await axios.get(`${apiUrl}/api/job-positions`);
         setJobPositions(res.data);
       } catch (error) {
         console.error('Error fetching job positions:', error.message);
@@ -32,7 +32,7 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`https://localhost:5000/api/auth/register`, {
+      await axios.post(`${apiUrl}/api/auth/register`, {
         name,
         password,
         role,

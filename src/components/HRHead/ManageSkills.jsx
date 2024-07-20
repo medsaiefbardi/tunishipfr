@@ -38,7 +38,7 @@ const ManageSkills = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/skills`, {
+        const res = await axios.get(`${apiUrl}/api/skills`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -62,7 +62,7 @@ const ManageSkills = () => {
         'Content-Type': 'application/json'
       };
 
-      const res = await axios.post(`https://localhost:5000/api/skills`, newSkill, { headers });
+      const res = await axios.post(`${apiUrl}/api/skills`, newSkill, { headers });
       setSkills([...skills, res.data]);
       setNewSkill({
         libelle: '',
@@ -90,7 +90,7 @@ const ManageSkills = () => {
         'Content-Type': 'application/json'
       };
 
-      const res = await axios.put(`https://localhost:5000/api/skills/${editSkill._id}`, editSkill, { headers });
+      const res = await axios.put(`${apiUrl}/api/skills/${editSkill._id}`, editSkill, { headers });
       const updatedSkills = skills.map(skill => skill._id === res.data._id ? res.data : skill);
       setSkills(updatedSkills);
       setEditSkill(null);
@@ -107,7 +107,7 @@ const ManageSkills = () => {
         'Content-Type': 'application/json'
       };
 
-      await axios.delete(`https://localhost:5000/api/skills/${id}`, { headers });
+      await axios.delete(`${apiUrl}/api/skills/${id}`, { headers });
       setSkills(skills.filter(skill => skill._id !== id));
     } catch (error) {
       console.error(error.message);

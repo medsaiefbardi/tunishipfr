@@ -22,7 +22,7 @@ const HRHeadSkillGaps = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/employees/skill-gaps`, {
+        const res = await axios.get(`${apiUrl}/api/employees/skill-gaps`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -19,7 +19,7 @@ const SkillDetail = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`https://localhost:5000/api/skills/${id}`, {
+        const res = await axios.get(`${apiUrl}/api/skills/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -44,7 +44,7 @@ const SkillDetail = () => {
         'Content-Type': 'application/json'
       };
 
-      await axios.put(`https://localhost:5000/api/skills/${id}`, updatedSkill, { headers });
+      await axios.put(`${apiUrl}/api/skills/${id}`, updatedSkill, { headers });
       setSkill(updatedSkill);
       setEditMode(false);
     } catch (error) {
@@ -60,7 +60,7 @@ const SkillDetail = () => {
         'Content-Type': 'application/json'
       };
 
-      await axios.delete(`https://localhost:5000/api/skills/${id}`, { headers });
+      await axios.delete(`${apiUrl}/api/skills/${id}`, { headers });
       navigate('/manage-skills');
     } catch (error) {
       console.error(error.message);

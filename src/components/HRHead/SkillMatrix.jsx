@@ -25,12 +25,12 @@ const SkillMatrix = () => {
         }
 
         const [skillsResponse, employeesResponse] = await Promise.all([
-          axios.get(`https://localhost:5000/api/skills`, {
+          axios.get(`${apiUrl}/api/skills`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
           }),
-          axios.get(`https://localhost:5000/api/employees`, {
+          axios.get(`${apiUrl}/api/employees`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
