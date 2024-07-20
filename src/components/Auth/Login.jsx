@@ -22,6 +22,7 @@ const Login = () => {
       } else if (role === 'hr_head') {
         navigate('/all-employees');
       }
+      window.location.reload(); // Reload the page to ensure the App component re-renders
     } catch (error) {
       console.error(error);
       setError('Invalid name or password');
