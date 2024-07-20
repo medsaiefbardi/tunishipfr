@@ -61,7 +61,7 @@ const App = () => {
             <Route path="/skills-matrix" element={<Navigate to="/profile" />} />
           </>
         )}
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );
