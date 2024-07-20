@@ -8,7 +8,7 @@ const SkillManagement = () => {
   const [newSkill, setNewSkill] = useState({ libelle: '',code: '', definition: '', notion: '', application: '',maitrise :'', expertise: '' });
 
   useEffect(() => {
-    axios.get("https://localhost:5000/api/skills")
+    axios.get(`${apiUrl}/api/skills`)
       .then(response => setSkills(response.data))
       .catch(error => console.error(error));
   }, []);
@@ -19,13 +19,13 @@ const SkillManagement = () => {
   };
 
   const handleAddSkill = () => {
-    axios.post("https://localhost:5000/api/skills", newSkill)
+    axios.post(`${apiUrl}/api/skills`, newSkill)
       .then(response => setSkills([...skills, response.data]))
       .catch(error => console.error(error));
   };
 
   const handleDeleteSkill = (id) => {
-    axios.delete(`https://localhost:5000/api/skills/${id}`)
+    axios.delete(`${apiUrl}/api/skills/${id}`)
       .then(() => setSkills(skills.filter(skill => skill._id !== id)))
       .catch(error => console.error(error));
   };

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const SkillGaps = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    axios.get("https://localhost:5000/api/employees/skill-gaps")
+    axios.get(`${apiUrl}/api/employees/skill-gaps`)
       .then(response => setEmployees(response.data))
       .catch(error => console.error(error));
   }, []);
