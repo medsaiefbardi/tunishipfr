@@ -7,7 +7,6 @@ import SkillGaps from './components/Employee/SkillGaps';
 import HRHeadAllEmployees from './components/HRHead/HRHeadAllEmployees';
 import Navbar from './components/Navbar';
 import ManageSkills from './components/HRHead/ManageSkills';
-import SkillDetail from './components/HRHead/SkillDetail';
 import ManageJobPositions from './components/HRHead/ManageJobPositions';
 import SkillMatrix from './components/HRHead/SkillMatrix';
 
@@ -47,7 +46,6 @@ const App = () => {
           <>
             <Route path="/all-employees" element={<HRHeadAllEmployees />} />
             <Route path="/manage-skills" element={<ManageSkills />} />
-            <Route path="/skills/:id" element={<SkillDetail />} />
             <Route path="/manage-job-positions" element={<ManageJobPositions />} />
             <Route path="/skills-matrix" element={<SkillMatrix />} />
           </>

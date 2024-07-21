@@ -16,7 +16,12 @@ const Login = () => {
       const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
       console.log('data', res.data);
       localStorage.setItem('token', res.data.token);
-      window.location.reload(); // Reload the page to reinitialize the app state
+      const role = res.data.role;
+      if (role === 'employee') {
+        navigate('/profile');
+      } else if (role === 'hr_head') {
+        navigate('/all-employees');
+      }
     } catch (error) {
       console.error(error);
       setError('Invalid name or password');

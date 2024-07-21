@@ -49,7 +49,7 @@ const HRHeadAllEmployees = () => {
           throw new Error('No token found. User not authenticated.');
         }
 
-        const res = await axios.get(`${apiUrl}/api/job-position`, {
+        const res = await axios.get(`${apiUrl}/api/job-positions`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
