@@ -18,9 +18,9 @@ const Login = () => {
       localStorage.setItem('token', res.data.token);
       const role = res.data.role;
       if (role === 'employee') {
-        navigate('/profile');
+        navigate('profile');
       } else if (role === 'hr_head') {
-        navigate('/all-employees');
+        navigate('all-employees');
       }
     } catch (error) {
       console.error(error);
