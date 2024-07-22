@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL || "https://tunishipbck.onrender.com";
 
 const Login = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
-      console.log('data', res.data);
       localStorage.setItem('token', res.data.token);
-      const role = res.data.role;
+      const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
+      const role = decodedToken.role;
+
       if (role === 'employee') {
-        navigate('profile');
+        window.location.href = '/profile';
       } else if (role === 'hr_head') {
-        navigate('all-employees');
+        window.location.href = '/all-employees';
       }
     } catch (error) {
       console.error(error);
