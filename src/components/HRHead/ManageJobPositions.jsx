@@ -238,31 +238,31 @@ const ManageJobPositions = () => {
       <h1 style={styles.heading}>FICHES DE POSTE</h1>
       <form onSubmit={selectedJobPosition ? handleMàJJobPosition : handleAddJobPosition} style={styles.form}>
         <label>TITRE</label>
-        <input type="text" name="title" value={selectedJobPosition ? selectedJobPosition.title : newJobPosition.title || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Title" required style={styles.input} />
+        <input type="text" name="title" value={selectedJobPosition ? selectedJobPosition.title : newJobPosition.title || ''} onChange={handleInputChange}  placeholder="Title" required style={styles.input} />
         <label>REFERENCE</label>
-        <input type="text" name="ref" value={selectedJobPosition ? selectedJobPosition.ref : newJobPosition.ref || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Reference" required style={styles.input} />
+        <input type="text" name="ref" value={selectedJobPosition ? selectedJobPosition.ref : newJobPosition.ref || ''} onChange={handleInputChange}  placeholder="Reference" required style={styles.input} />
         <label>SERVICE</label>
-        <input type="text" name="service" value={selectedJobPosition ? selectedJobPosition.service : newJobPosition.service || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Service" required style={styles.input} />
+        <input type="text" name="service" value={selectedJobPosition ? selectedJobPosition.service : newJobPosition.service || ''} onChange={handleInputChange}  placeholder="Service" required style={styles.input} />
         <label>LIEUX</label>
-        <input type="text" name="lieu" value={selectedJobPosition ? selectedJobPosition.lieu : newJobPosition.lieu || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Location" required style={styles.input} />
+        <input type="text" name="lieu" value={selectedJobPosition ? selectedJobPosition.lieu : newJobPosition.lieu || ''} onChange={handleInputChange}  placeholder="Location" required style={styles.input} />
         <label>INTERIMAIRE</label>
-        <input type="text" name="interimaire" value={selectedJobPosition ? selectedJobPosition.interimaire : newJobPosition.interimaire || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Interim" required style={styles.input} />
+        <input type="text" name="interimaire" value={selectedJobPosition ? selectedJobPosition.interimaire : newJobPosition.interimaire || ''} onChange={handleInputChange}  placeholder="Interim" required style={styles.input} />
         <label>LIAISONS HIERARCHIQUES</label>
-        <input type="text" name="liaisonsHiera" value={selectedJobPosition ? selectedJobPosition.liaisonsHiera : newJobPosition.liaisonsHiera || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Hierarchical Connections" required style={styles.input} />
+        <input type="text" name="liaisonsHiera" value={selectedJobPosition ? selectedJobPosition.liaisonsHiera : newJobPosition.liaisonsHiera || ''} onChange={handleInputChange}  placeholder="Hierarchical Connections" required style={styles.input} />
         <label>LIAISIONS FONCTIONNELLES</label>
-        <input type="text" name="liaisonsFonc" value={selectedJobPosition ? selectedJobPosition.liaisonsFonc : newJobPosition.liaisonsFonc || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Functional Connections" required style={styles.input} />
+        <input type="text" name="liaisonsFonc" value={selectedJobPosition ? selectedJobPosition.liaisonsFonc : newJobPosition.liaisonsFonc || ''} onChange={handleInputChange}  placeholder="Functional Connections" required style={styles.input} />
         <label>RAISON</label>
-        <input type="text" name="raison" value={selectedJobPosition ? selectedJobPosition.raison : newJobPosition.raison || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Reason" required style={styles.input} />
+        <input type="text" name="raison" value={selectedJobPosition ? selectedJobPosition.raison : newJobPosition.raison || ''} onChange={handleInputChange}  placeholder="Reason" required style={styles.input} />
 
         <label>MISSION</label>
         {selectedJobPosition ? selectedJobPosition.mission.map((mission, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={mission.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'mission')} onInput={handleInputResize} placeholder="Mission Name" required style={styles.input} />
+            <input type="text" name="name" value={mission.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'mission')}  placeholder="Mission Name" required style={styles.input} />
             <textarea name="description" value={mission.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'mission')} placeholder="Mission Description" required style={styles.textarea} />
           </div>
         )) : newJobPosition.mission.map((mission, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={mission.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'mission')} onInput={handleInputResize} placeholder="Mission Name" required style={styles.input} />
+            <input type="text" name="name" value={mission.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'mission')}  placeholder="Mission Name" required style={styles.input} />
             <textarea name="description" value={mission.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'mission')} placeholder="Mission Description" required style={styles.textarea} />
           </div>
         ))}
@@ -271,12 +271,12 @@ const ManageJobPositions = () => {
         <label>TACHES OPERATIONNELLES</label>
         {selectedJobPosition ? selectedJobPosition.tacheOper.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOper')} onInput={handleInputResize} placeholder="Task Name" required style={styles.input} />
+            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOper')}  placeholder="Task Name" required style={styles.input} />
             <textarea name="description" value={tache.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOper')} placeholder="Task Description" required style={styles.textarea} />
           </div>
         )) : newJobPosition.tacheOper.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOper')} onInput={handleInputResize} placeholder="Task Name" required style={styles.input} />
+            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOper')}  placeholder="Task Name" required style={styles.input} />
             <textarea name="description" value={tache.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOper')} placeholder="Task Description" required style={styles.textarea} />
           </div>
         ))}
@@ -285,12 +285,12 @@ const ManageJobPositions = () => {
         <label>TACHES OCCASIONNELLES</label>
         {selectedJobPosition ? selectedJobPosition.tacheOccas.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOccas')} onInput={handleInputResize} placeholder="Task Name" required style={styles.input} />
+            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOccas')}  placeholder="Task Name" required style={styles.input} />
             <textarea name="description" value={tache.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOccas')} placeholder="Task Description" required style={styles.textarea} />
           </div>
         )) : newJobPosition.tacheOccas.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOccas')} onInput={handleInputResize} placeholder="Task Name" required style={styles.input} />
+            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOccas')}  placeholder="Task Name" required style={styles.input} />
             <textarea name="description" value={tache.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'tacheOccas')} placeholder="Task Description" required style={styles.textarea} />
           </div>
         ))}
@@ -299,12 +299,12 @@ const ManageJobPositions = () => {
         <label>TACHES STRATIGIQUES</label>
         {selectedJobPosition ? selectedJobPosition.tachesStrat.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesStrat')} onInput={handleInputResize} placeholder="Task Name" required style={styles.input} />
+            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesStrat')}  placeholder="Task Name" required style={styles.input} />
             <textarea name="description" value={tache.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesStrat')} placeholder="Task Description" required style={styles.textarea} />
           </div>
         )) : newJobPosition.tachesStrat.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesStrat')} onInput={handleInputResize} placeholder="Task Name" required style={styles.input} />
+            <input type="text" name="name" value={tache.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesStrat')}  placeholder="Task Name" required style={styles.input} />
             <textarea name="description" value={tache.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesStrat')} placeholder="Task Description" required style={styles.textarea} />
           </div>
         ))}
@@ -313,13 +313,13 @@ const ManageJobPositions = () => {
         <label>TACHES EP</label>
         {selectedJobPosition ? selectedJobPosition.tachesEP.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="titre" value={tache.titre || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')} onInput={handleInputResize} placeholder="Titre" required style={styles.input} />
+            <input type="text" name="titre" value={tache.titre || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')}  placeholder="Titre" required style={styles.input} />
             <textarea name="int" value={tache.int || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')} placeholder="Int Task" required style={styles.textarea} />
             <textarea name="moyOut" value={tache.moyOut || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')} placeholder="Moy Out Task" required style={styles.textarea} />
           </div>
         )) : newJobPosition.tachesEP.map((tache, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="titre" value={tache.titre || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')} onInput={handleInputResize} placeholder="Titre" required style={styles.input} />
+            <input type="text" name="titre" value={tache.titre || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')}  placeholder="Titre" required style={styles.input} />
             <textarea name="int" value={tache.int || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')} placeholder="Int Task" required style={styles.textarea} />
             <textarea name="moyOut" value={tache.moyOut || ''} onChange={(e) => handleArrayInputChange(index, e, 'tachesEP')} placeholder="Moy Out Task" required style={styles.textarea} />
           </div>
@@ -327,30 +327,30 @@ const ManageJobPositions = () => {
         <button type="button" onClick={() => handleAddArrayItem('tachesEP')} style={styles.button}>AJOUTER TACHES </button>
 
         <label>KPIs QUANTITATIVES</label>
-        <input type="text" name="kpiQuant" value={selectedJobPosition ? selectedJobPosition.kpiQuant : newJobPosition.kpiQuant || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Quantitative KPIs" required style={styles.input} />
+        <input type="text" name="kpiQuant" value={selectedJobPosition ? selectedJobPosition.kpiQuant : newJobPosition.kpiQuant || ''} onChange={handleInputChange}  placeholder="Quantitative KPIs" required style={styles.input} />
         <label>KPIs QUALITATIVES</label>
-        <input type="text" name="kpiQualt" value={selectedJobPosition ? selectedJobPosition.kpiQualt : newJobPosition.kpiQualt || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Qualitative KPIs" required style={styles.input} />
+        <input type="text" name="kpiQualt" value={selectedJobPosition ? selectedJobPosition.kpiQualt : newJobPosition.kpiQualt || ''} onChange={handleInputChange}  placeholder="Qualitative KPIs" required style={styles.input} />
         <label>EVOLUTION VERTICALE</label>
-        <input type="text" name="evolutionV" value={selectedJobPosition ? selectedJobPosition.evolutionV : newJobPosition.evolutionV || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Evolution Vision" required style={styles.input} />
+        <input type="text" name="evolutionV" value={selectedJobPosition ? selectedJobPosition.evolutionV : newJobPosition.evolutionV || ''} onChange={handleInputChange}  placeholder="Evolution Vision" required style={styles.input} />
         <label>EVOLUTION HORIZONTALE</label>
-        <input type="text" name="evolutionH" value={selectedJobPosition ? selectedJobPosition.evolutionH : newJobPosition.evolutionH || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Evolution Horizon" required style={styles.input} />
+        <input type="text" name="evolutionH" value={selectedJobPosition ? selectedJobPosition.evolutionH : newJobPosition.evolutionH || ''} onChange={handleInputChange}  placeholder="Evolution Horizon" required style={styles.input} />
         <label>LIMITES</label>
-        <input type="text" name="limites" value={selectedJobPosition ? selectedJobPosition.limites : newJobPosition.limites || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Limitations" required style={styles.input} />
+        <input type="text" name="limites" value={selectedJobPosition ? selectedJobPosition.limites : newJobPosition.limites || ''} onChange={handleInputChange}  placeholder="Limitations" required style={styles.input} />
         <label>OBJECTIVES</label>
         {selectedJobPosition ? selectedJobPosition.objectifs.map((objectifs, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={objectifs.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')} onInput={handleInputResize} placeholder="Objectifs Name" required style={styles.input} />
+            <input type="text" name="name" value={objectifs.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')}  placeholder="Objectifs Name" required style={styles.input} />
             <textarea name="description" value={objectifs.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')} placeholder="Objectifs Description" required style={styles.textarea} />
           </div>
         )) : newJobPosition.objectifs.map((objectifs, index) => (
           <div key={index} style={styles.flexRow}>
-            <input type="text" name="name" value={objectifs.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')} onInput={handleInputResize} placeholder="Objectifs Name" required style={styles.input} />
+            <input type="text" name="name" value={objectifs.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')}  placeholder="Objectifs Name" required style={styles.input} />
             <textarea name="description" value={objectifs.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')} placeholder="Objectifs Description" required style={styles.textarea} />
           </div>
         ))}
         <button type="button" onClick={() => handleAddArrayItem('objectifs')} style={styles.button}>AJOUTER OBJECTIF</button>
         <label>Powers</label>
-        <input type="text" name="pouvoirs" value={selectedJobPosition ? selectedJobPosition.pouvoirs : newJobPosition.pouvoirs || ''} onChange={handleInputChange} onInput={handleInputResize} placeholder="Powers" required style={styles.input} />
+        <input type="text" name="pouvoirs" value={selectedJobPosition ? selectedJobPosition.pouvoirs : newJobPosition.pouvoirs || ''} onChange={handleInputChange}  placeholder="Powers" required style={styles.input} />
 
         {/* Required Skills */}
         <div>
@@ -436,7 +436,9 @@ const styles = {
     padding: '8px',
     fontSize: '14px',
     border: '1px solid #ddd',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    resize: 'vertical',
+    minHeight: '40px'
   },
   textarea: {
     padding: '8px',

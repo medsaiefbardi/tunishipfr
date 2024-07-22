@@ -150,7 +150,7 @@ const ManageSkills = () => {
           name="code"
           value={editSkill ? editSkill.code : newSkill.code}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           placeholder="CODE"
           required
           style={styles.input}
@@ -159,7 +159,7 @@ const ManageSkills = () => {
           name="type"
           value={editSkill ? editSkill.type : newSkill.type}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           required
           style={styles.select}
         >
@@ -185,7 +185,7 @@ const ManageSkills = () => {
           name="definition"
           value={editSkill ? editSkill.definition : newSkill.definition}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           placeholder="DEFINITION"
           style={styles.input}
         />
@@ -194,7 +194,7 @@ const ManageSkills = () => {
           name="notion"
           value={editSkill ? editSkill.notion : newSkill.notion}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           placeholder="NOTION"
           style={styles.input}
         />
@@ -203,7 +203,7 @@ const ManageSkills = () => {
           name="application"
           value={editSkill ? editSkill.application : newSkill.application}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           placeholder="APPLICATION"
           style={styles.input}
         />
@@ -212,7 +212,7 @@ const ManageSkills = () => {
           name="maitrise"
           value={editSkill ? editSkill.maitrise : newSkill.maitrise}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           placeholder="MAITRISE"
           style={styles.input}
         />
@@ -221,7 +221,7 @@ const ManageSkills = () => {
           name="expertise"
           value={editSkill ? editSkill.expertise : newSkill.expertise}
           onChange={handleInputChange}
-          onInput={handleInputResize}
+          
           placeholder="EXPERTISE"
           style={styles.input}
         />
@@ -274,6 +274,8 @@ const styles = {
     fontSize: '16px',  // Increased font size
     border: '1px solid #ccc',
     borderRadius: '5px',
+    resize: 'vertical',
+    minHeight: '40px'
   },
   select: {
     width: '100%',  // Updated to 100% width
