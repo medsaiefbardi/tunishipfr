@@ -17,14 +17,15 @@ const App = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    const storedRole = localStorage.getItem('role');
-
-    if (storedToken && storedRole) {
+    if (storedToken) {
       setToken(storedToken);
-      setRole(storedRole);
+      const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
+      setRole(decodedToken.role);
+      console.log('decoded', decodedToken);
+      console.log('User role:', decodedToken.role); // Debugging information
     } else {
-      setToken(null);
-      setRole(null);
+      setToken(null); // Ensure token state is null if no token exists
+      setRole(null); // Reset role state
     }
     setLoading(false);
   }, []);
