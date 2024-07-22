@@ -145,7 +145,7 @@ const ManageSkills = () => {
           required
           style={styles.input}
         />
-        <input
+        <textarea
           type="text"
           name="code"
           value={editSkill ? editSkill.code : newSkill.code}
@@ -180,7 +180,7 @@ const ManageSkills = () => {
             <option key={level} value={level}>{level}</option>
           ))}
         </select>
-        <input
+        <textarea
           type="text"
           name="definition"
           value={editSkill ? editSkill.definition : newSkill.definition}
@@ -189,7 +189,7 @@ const ManageSkills = () => {
           placeholder="DEFINITION"
           style={styles.textarea}
         />
-        <input
+        <textarea
           type="text"
           name="notion"
           value={editSkill ? editSkill.notion : newSkill.notion}
@@ -198,7 +198,7 @@ const ManageSkills = () => {
           placeholder="NOTION"
           style={styles.textarea}
         />
-        <input
+        <textarea
           type="text"
           name="application"
           value={editSkill ? editSkill.application : newSkill.application}
@@ -207,7 +207,7 @@ const ManageSkills = () => {
           placeholder="APPLICATION"
           style={styles.textarea}
         />
-        <input
+        <textarea
           type="text"
           name="maitrise"
           value={editSkill ? editSkill.maitrise : newSkill.maitrise}
@@ -216,7 +216,7 @@ const ManageSkills = () => {
           placeholder="MAITRISE"
           style={styles.textarea}
         />
-        <input
+        <textarea
           type="text"
           name="expertise"
           value={editSkill ? editSkill.expertise : newSkill.expertise}
