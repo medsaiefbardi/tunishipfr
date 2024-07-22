@@ -153,7 +153,7 @@ const ManageSkills = () => {
           
           placeholder="CODE"
           required
-          style={styles.input}
+          style={styles.textarea}
         />
         <select
           name="type"
@@ -187,7 +187,7 @@ const ManageSkills = () => {
           onChange={handleInputChange}
           
           placeholder="DEFINITION"
-          style={styles.input}
+          style={styles.textarea}
         />
         <input
           type="text"
@@ -196,7 +196,7 @@ const ManageSkills = () => {
           onChange={handleInputChange}
           
           placeholder="NOTION"
-          style={styles.input}
+          style={styles.textarea}
         />
         <input
           type="text"
@@ -205,7 +205,7 @@ const ManageSkills = () => {
           onChange={handleInputChange}
           
           placeholder="APPLICATION"
-          style={styles.input}
+          style={styles.textarea}
         />
         <input
           type="text"
@@ -214,7 +214,7 @@ const ManageSkills = () => {
           onChange={handleInputChange}
           
           placeholder="MAITRISE"
-          style={styles.input}
+          style={styles.textarea}
         />
         <input
           type="text"
@@ -223,7 +223,7 @@ const ManageSkills = () => {
           onChange={handleInputChange}
           
           placeholder="EXPERTISE"
-          style={styles.input}
+          style={styles.textarea}
         />
         <button type="submit" style={styles.button}>
           {editSkill ? 'MàJ COMPETENCE' : 'AJOUTER COMPETENCE'}
@@ -268,12 +268,12 @@ const styles = {
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
   },
-  input: {
+  
+  textarea: {
     width: '100%',  // Updated to 100% width
     padding: '12px',  // Increased padding
     fontSize: '16px',  // Increased font size
     border: '1px solid #ccc',
-    borderRadius: '5px',
     resize: 'vertical',
     minHeight: '40px'
   },
