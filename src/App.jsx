@@ -11,21 +11,16 @@ import ManageJobPositions from './components/HRHead/ManageJobPositions';
 import SkillMatrix from './components/HRHead/SkillMatrix';
 
 const App = () => {
-  const [token, setToken] = useState(null);
-  const [role, setRole] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [role, setRole] = useState(localStorage.getItem('role'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
-      setToken(storedToken);
       const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
       setRole(decodedToken.role);
-      console.log('decoded', decodedToken);
-      console.log('User role:', decodedToken.role); // Debugging information
-    } else {
-      setToken(null); // Ensure token state is null if no token exists
-      setRole(null); // Reset role state
+      setToken(storedToken);
     }
     setLoading(false);
   }, []);
@@ -36,9 +31,9 @@ const App = () => {
 
   return (
     <Router>
-      {token && <Navbar role={role} />} {/* Render Navbar only if token exists */}
+      {token && <Navbar role={role} />}
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setToken={setToken} setRole={setRole} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={token ? <EmployeeProfile /> : <Navigate to="/login" />} />
         <Route path="/skill-gaps" element={token && role === 'employee' ? <SkillGaps /> : <Navigate to="/login" />} />
