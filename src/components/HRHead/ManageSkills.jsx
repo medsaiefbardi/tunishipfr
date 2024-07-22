@@ -257,14 +257,16 @@ const styles = {
     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
   },
   input: {
-    width: '80%',
-    padding: '10px',
+    width: '100%',  // Updated to 100% width
+    padding: '12px',  // Increased padding
+    fontSize: '16px',  // Increased font size
     border: '1px solid #ccc',
     borderRadius: '5px',
   },
   select: {
-    width: '80%',
-    padding: '10px',
+    width: '100%',  // Updated to 100% width
+    padding: '12px',  // Increased padding
+    fontSize: '16px',  // Increased font size
     border: '1px solid #ccc',
     borderRadius: '5px',
   },

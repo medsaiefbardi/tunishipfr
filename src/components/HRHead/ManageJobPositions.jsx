@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const skillLevels = ['N/A','N', 'A', 'M', 'E'];
@@ -431,8 +430,9 @@ const styles = {
     gap: '10px'
   },
   input: {
-    padding: '8px',
-    fontSize: '14px',
+    width: '100%',  // Updated to 100% width
+    padding: '12px',  // Increased padding
+    fontSize: '16px',  // Increased font size
     border: '1px solid #ddd',
     borderRadius: '4px'
   },
@@ -455,7 +455,7 @@ const styles = {
   },
   jobPositionsUl: {
     listStyleType: 'none',
-    padding: '0'
+    padding: 0
   },
   skillsGrid: {
     display: 'grid',
