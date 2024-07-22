@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const apiUrl = process.env.REACT_APP_API_URL || "https://tunishipbck.onrender.com";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Login = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    const storedRole = localStorage.getItem('role');
+
+    if (storedToken && storedRole) {
+      if (storedRole === 'employee') {
+        navigate('/profile');
+      } else if (storedRole === 'hr_head') {
+        navigate('/all-employees');
+      }
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
       localStorage.setItem('token', res.data.token);
-      const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
-      const role = decodedToken.role;
+      localStorage.setItem('role', res.data.role);
 
-      if (role === 'employee') {
-        window.location.href = '/profile';
-      } else if (role === 'hr_head') {
-        window.location.href = '/all-employees';
+      if (res.data.role === 'employee') {
+        navigate('/profile');
+      } else if (res.data.role === 'hr_head') {
+        navigate('/all-employees');
       }
     } catch (error) {
       console.error(error);
