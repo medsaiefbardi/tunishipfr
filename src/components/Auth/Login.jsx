@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,25 +16,17 @@ const Login = () => {
       const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
+      if (res.data.role === 'employee') {
+        navigate('/profile');
+      } else if (res.data.role === 'hr_head') {
+        navigate('/all-employees');
+      }
       window.location.reload();  // Reload the page to ensure the App component re-renders
     } catch (error) {
       console.error(error);
       setError('Invalid name or password');
     }
   };
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedRole = localStorage.getItem('role');
-
-    if (storedToken && storedRole) {
-      if (storedRole === 'employee') {
-        navigate('/profile');
-      } else if (storedRole === 'hr_head') {
-        navigate('/all-employees');
-      }
-    }
-  }, [navigate]);
 
   return (
     <div style={styles.loginContainer}>
