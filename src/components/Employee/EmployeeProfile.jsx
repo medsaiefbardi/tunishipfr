@@ -43,25 +43,25 @@ const EmployeeProfile = () => {
         <>
           <div style={styles.row}>
             <div style={styles.col}>
-              <p style={styles.text}><strong>Position:</strong> {jobPosition.title}</p>
-              <p style={styles.text}><strong>Reference:</strong> {jobPosition.ref}</p>
-              <p style={styles.text}><strong>Service:</strong> {jobPosition.service}</p>
-              <p style={styles.text}><strong>Location:</strong> {jobPosition.lieu}</p>
-              <p style={styles.text}><strong>Interimaire:</strong> {jobPosition.interimaire}</p>
+              <p style={styles.text}><strong>POSITION:</strong> {jobPosition.title}</p>
+              <p style={styles.text}><strong>REFERENCE:</strong> {jobPosition.ref}</p>
+              <p style={styles.text}><strong>SERVICE:</strong> {jobPosition.service}</p>
+              <p style={styles.text}><strong>LIEU:</strong> {jobPosition.lieu}</p>
+              <p style={styles.text}><strong>INTERIMAIRE:</strong> {jobPosition.interimaire}</p>
             </div>
             <div style={styles.col}>
-              <p style={styles.text}><strong>Hierarchical Relations:</strong> {jobPosition.liaisonsHiera}</p>
-              <p style={styles.text}><strong>Functional Relations:</strong> {jobPosition.liaisonsFonc}</p>
-              <p style={styles.text}><strong>Reason:</strong> {jobPosition.raison}</p>
-              <p style={styles.text}><strong>Quantitative KPI:</strong> {jobPosition.kpiQuant}</p>
-              <p style={styles.text}><strong>Qualitative KPI:</strong> {jobPosition.kpiQualt}</p>
+              <p style={styles.text}><strong>LIAISONS HIERARCHIQUES:</strong> {jobPosition.liaisonsHiera}</p>
+              <p style={styles.text}><strong>LIAISONS FONCTIONNELLES:</strong> {jobPosition.liaisonsFonc}</p>
+              <p style={styles.text}><strong>RAISON:</strong> {jobPosition.raison}</p>
+              <p style={styles.text}><strong>KPIs QUANTITATIVES:</strong> {jobPosition.kpiQuant}</p>
+              <p style={styles.text}><strong>KPIs QUALITATIVES:</strong> {jobPosition.kpiQualt}</p>
             </div>
           </div>
           <div style={styles.row}>
             <div style={styles.col}>
-              <p style={styles.text}><strong>Vertical Evolution:</strong> {jobPosition.evolutionV}</p>
-              <p style={styles.text}><strong>Horizontal Evolution:</strong> {jobPosition.evolutionH}</p>
-              <p style={styles.text}><strong>Limits:</strong></p>
+              <p style={styles.text}><strong>EVOLUTION VERTICALE:</strong> {jobPosition.evolutionV}</p>
+              <p style={styles.text}><strong>EVOLUTION HORIZONTALE:</strong> {jobPosition.evolutionH}</p>
+              <p style={styles.text}><strong>LIMITES:</strong></p>
               <ul>
                 {jobPosition.limites.map((limite, index) => (
                   <li key={index} style={styles.listItem}>{limite}</li>
@@ -69,7 +69,7 @@ const EmployeeProfile = () => {
               </ul>
             </div>
             <div style={styles.col}>
-              <p style={styles.text}><strong>Objectives:</strong></p>
+              <p style={styles.text}><strong>OBJECTIFS:</strong></p>
               <ul>
                 {jobPosition.objectifs.map((objectifs, index) => (
                   <li key={index} style={styles.listItem}>
@@ -77,7 +77,7 @@ const EmployeeProfile = () => {
                   </li>
                 ))}
               </ul>
-              <p style={styles.text}><strong>Powers:</strong></p>
+              <p style={styles.text}><strong>POUVOIRS:</strong></p>
               <ul>
                 {jobPosition.pouvoirs.map((pouvoir, index) => (
                   <li key={index} style={styles.listItem}>{pouvoir}</li>
@@ -87,7 +87,7 @@ const EmployeeProfile = () => {
           </div>
           <div style={styles.row}>
             <div style={styles.colFull}>
-              <p style={styles.text}><strong>Missions:</strong></p>
+              <p style={styles.text}><strong>MISSIONS:</strong></p>
               <ul>
                 {jobPosition.mission.map((mission, index) => (
                   <li key={index} style={styles.listItem}>
@@ -95,7 +95,7 @@ const EmployeeProfile = () => {
                   </li>
                 ))}
               </ul>
-              <p style={styles.text}><strong>Operational Tasks:</strong></p>
+              <p style={styles.text}><strong>TACHES OPERATIONNELLES:</strong></p>
               <ul>
                 {jobPosition.tacheOper.map((task, index) => (
                   <li key={index} style={styles.listItem}>
@@ -103,7 +103,7 @@ const EmployeeProfile = () => {
                   </li>
                 ))}
               </ul>
-              <p style={styles.text}><strong>Occasional Tasks:</strong></p>
+              <p style={styles.text}><strong>TACHES OCCASIONNELLES:</strong></p>
               <ul>
                 {jobPosition.tacheOccas.map((task, index) => (
                   <li key={index} style={styles.listItem}>
@@ -111,7 +111,7 @@ const EmployeeProfile = () => {
                   </li>
                 ))}
               </ul>
-              <p style={styles.text}><strong>Strategic Tasks:</strong></p>
+              <p style={styles.text}><strong>TACHES STRATIGIQUES:</strong></p>
               <ul>
                 {jobPosition.tachesStrat.map((task, index) => (
                   <li key={index} style={styles.listItem}>

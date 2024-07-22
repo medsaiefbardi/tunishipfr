@@ -197,17 +197,17 @@ const HRHeadAllEmployees = () => {
   return (
     <div style={styles.container}>
       {error && <p style={styles.error}>{error}</p>}
-      <h1 style={styles.heading}>All Employees</h1>
+      <h1 style={styles.heading}>EMPLOYES</h1>
       {selectedEmployee ? (
         <div>
-          <h2>Update Employee</h2>
+          <h2>MàJ EMLPOYE</h2>
           <form onSubmit={handleUpdateEmployee} style={styles.form}>
             <input
               type="text"
               name="name"
               value={selectedEmployee.name}
               onChange={handleEmployeeInputChange}
-              placeholder="Name"
+              placeholder="Nom"
               required
               style={styles.input}
             />
@@ -218,8 +218,8 @@ const HRHeadAllEmployees = () => {
               required
               style={styles.input}
             >
-              <option value="employee">Employee</option>
-              <option value="hr_head">HR Head</option>
+              <option value="employee">Employé</option>
+              <option value="hr_head">RH</option>
             </select>
             {selectedEmployee.role === 'employee' && (
               <>
@@ -230,14 +230,14 @@ const HRHeadAllEmployees = () => {
                   required
                   style={styles.input}
                 >
-                  <option value="">Select Job Position</option>
+                  <option value="">ChOISIR POSTE</option>
                   {jobPositions.map(position => (
                     <option key={position._id} value={position._id}>
                       {position.title}
                     </option>
                   ))}
                 </select>
-                <h3>Skills</h3>
+                <h3>COMPETENCES</h3>
                 {selectedEmployee.skills.map((skill, index) => (
                   <div key={index} style={styles.skillRow}>
                     <label>{skills.find(s => s._id === skill.skill)?.code || ''}</label>
@@ -256,8 +256,8 @@ const HRHeadAllEmployees = () => {
                 ))}
               </>
             )}
-            <button type="submit" style={styles.button}>Update Employee</button>
-            <button type="button" onClick={handleBackToList} style={styles.button}>Back to List</button>
+            <button type="submit" style={styles.button}>METTRE A JOUR</button>
+            <button type="button" onClick={handleBackToList} style={styles.button}>REVENIR</button>
           </form>
         </div>
       ) : (
@@ -265,16 +265,16 @@ const HRHeadAllEmployees = () => {
           <ul style={styles.list}>
             {employees.map(employee => (
               <li key={employee._id} style={styles.listItem}>
-                {employee.name} - {employee.jobPosition ? employee.jobPosition.title : 'No position assigned'}
+                {employee.name} - {employee.jobPosition ? employee.jobPosition.title : 'N/A'}
                 <div>
-                  <button onClick={() => handleSelectEmployee(employee)} style={styles.button}>Edit</button>
-                  <button onClick={() => handleDeleteEmployee(employee._id)} style={styles.button}>Delete</button>
+                  <button onClick={() => handleSelectEmployee(employee)} style={styles.button}>MODIFIER</button>
+                  <button onClick={() => handleDeleteEmployee(employee._id)} style={styles.button}>SUPPRIMER</button>
                 </div>
               </li>
             ))}
           </ul>
           <button onClick={() => setNewEmployeeVisible(!newEmployeeVisible)} style={styles.button}>
-            {newEmployeeVisible ? 'Cancel' : 'Add Employee'}
+            {newEmployeeVisible ? 'ANNULER' : 'AJOUTER EMPLOYE'}
           </button>
           {newEmployeeVisible && (
             <form onSubmit={handleAddEmployee} style={styles.form}>
@@ -283,13 +283,13 @@ const HRHeadAllEmployees = () => {
                 name="name"
                 value={newEmployee.name}
                 onChange={handleInputChange}
-                placeholder="Name"
+                placeholder="Nom"
                 required
                 style={styles.input}
               />
               <input
                 type="password"
-                name="password"
+                name="Mot de passe"
                 value={newEmployee.password}
                 onChange={handleInputChange}
                 placeholder="Password"
@@ -303,8 +303,8 @@ const HRHeadAllEmployees = () => {
                 required
                 style={styles.input}
               >
-                <option value="employee">Employee</option>
-                <option value="hr_head">HR Head</option>
+                <option value="employee">EMPLOYE</option>
+                <option value="hr_head">RH</option>
               </select>
               {newEmployee.role === 'employee' && (
                 <>
@@ -315,7 +315,7 @@ const HRHeadAllEmployees = () => {
                     required
                     style={styles.input}
                   >
-                    <option value="">Select Job Position</option>
+                    <option value="">CHOISIR POSTE</option>
                     {jobPositions.map(position => (
                       <option key={position._id} value={position._id}>
                         {position.title}
@@ -341,7 +341,7 @@ const HRHeadAllEmployees = () => {
                   ))}
                 </>
               )}
-              <button type="submit" style={styles.button}>Add Employee</button>
+              <button type="submit" style={styles.button}>AJOUTER EMPLOYE</button>
             </form>
           )}
         </>

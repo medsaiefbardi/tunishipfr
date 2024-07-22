@@ -13,23 +13,23 @@ const Navbar = ({ role }) => {
     <nav style={styles.navbar}>
       <ul style={styles.navList}>
         <li style={styles.navItem}>
-          <Link to="/profile" style={styles.navLink}>Profile</Link>
+          <Link to="/profile" style={styles.navLink}>PROFILE</Link>
         </li>
         {role === 'employee' && (
           <li style={styles.navItem}>
-            <Link to="/skill-gaps" style={styles.navLink}>Skill Gaps</Link>
+            <Link to="/skill-gaps" style={styles.navLink}>COMPETENCES</Link>
           </li>
         )}
         {role === 'hr_head' && (
           <>
             <li style={styles.navItem}>
-              <Link to="/all-employees" style={styles.navLink}>All Employees</Link>
+              <Link to="/all-employees" style={styles.navLink}>EMPLOYES</Link>
             </li>
             <li style={styles.navItem}>
-              <Link to="/manage-skills" style={styles.navLink}>Manage Skills</Link>
+              <Link to="/manage-skills" style={styles.navLink}>COMPETENCES</Link>
             </li>
             <li style={styles.navItem}>
-              <Link to="/manage-job-positions" style={styles.navLink}>Manage Positions</Link>
+              <Link to="/manage-job-positions" style={styles.navLink}>FICHE DE POSTE</Link>
             </li>
             <li style={styles.navItem}>
               <Link to="/skills-matrix" style={styles.navLink}>Skills Matrix</Link>
@@ -37,7 +37,7 @@ const Navbar = ({ role }) => {
           </>
         )}
         <li style={styles.navItem}>
-          <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
+          <button onClick={handleLogout} style={styles.logoutButton}>DECONNEXION</button>
         </li>
       </ul>
     </nav>

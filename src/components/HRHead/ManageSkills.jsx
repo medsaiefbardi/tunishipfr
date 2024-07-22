@@ -126,6 +126,10 @@ const ManageSkills = () => {
   const handleEditClick = (skill) => {
     setEditSkill(skill);
   };
+  const handleInputResize = (e) => {
+    e.target.style.width = 'auto';
+    e.target.style.width = `${e.target.scrollWidth}px`;
+  };
 
   return (
     <div style={styles.container}>
@@ -136,7 +140,8 @@ const ManageSkills = () => {
           name="libelle"
           value={editSkill ? editSkill.libelle : newSkill.libelle}
           onChange={handleInputChange}
-          placeholder="Skill Libelle"
+          onInput={handleInputResize}
+          placeholder="LIBELLE"
           required
           style={styles.input}
         />
@@ -145,7 +150,8 @@ const ManageSkills = () => {
           name="code"
           value={editSkill ? editSkill.code : newSkill.code}
           onChange={handleInputChange}
-          placeholder="Skill Code"
+          onInput={handleInputResize}
+          placeholder="CODE"
           required
           style={styles.input}
         />
@@ -153,10 +159,11 @@ const ManageSkills = () => {
           name="type"
           value={editSkill ? editSkill.type : newSkill.type}
           onChange={handleInputChange}
+          onInput={handleInputResize}
           required
           style={styles.select}
         >
-          <option value="">Select Type</option>
+          <option value="">TYPE</option>
           {skillTypes.map(type => (
             <option key={type} value={type}>{type}</option>
           ))}
@@ -168,7 +175,7 @@ const ManageSkills = () => {
           required
           style={styles.select}
         >
-          <option value="">Select Level</option>
+          <option value="">LEVEL PAR DEFAUT</option>
           {skillLevels.map(level => (
             <option key={level} value={level}>{level}</option>
           ))}
@@ -178,7 +185,8 @@ const ManageSkills = () => {
           name="definition"
           value={editSkill ? editSkill.definition : newSkill.definition}
           onChange={handleInputChange}
-          placeholder="Definition"
+          onInput={handleInputResize}
+          placeholder="DEFINITION"
           style={styles.input}
         />
         <input
@@ -186,7 +194,8 @@ const ManageSkills = () => {
           name="notion"
           value={editSkill ? editSkill.notion : newSkill.notion}
           onChange={handleInputChange}
-          placeholder="Notion"
+          onInput={handleInputResize}
+          placeholder="NOTION"
           style={styles.input}
         />
         <input
@@ -194,7 +203,8 @@ const ManageSkills = () => {
           name="application"
           value={editSkill ? editSkill.application : newSkill.application}
           onChange={handleInputChange}
-          placeholder="Application"
+          onInput={handleInputResize}
+          placeholder="APPLICATION"
           style={styles.input}
         />
         <input
@@ -202,7 +212,8 @@ const ManageSkills = () => {
           name="maitrise"
           value={editSkill ? editSkill.maitrise : newSkill.maitrise}
           onChange={handleInputChange}
-          placeholder="Maitrise"
+          onInput={handleInputResize}
+          placeholder="MAITRISE"
           style={styles.input}
         />
         <input
@@ -210,11 +221,12 @@ const ManageSkills = () => {
           name="expertise"
           value={editSkill ? editSkill.expertise : newSkill.expertise}
           onChange={handleInputChange}
-          placeholder="Expertise"
+          onInput={handleInputResize}
+          placeholder="EXPERTISE"
           style={styles.input}
         />
         <button type="submit" style={styles.button}>
-          {editSkill ? 'Update Skill' : 'Add Skill'}
+          {editSkill ? 'MàJ COMPETENCE' : 'AJOUTER COMPETENCE'}
         </button>
       </form>
       <h3>Referentiel de compétences</h3>
@@ -223,8 +235,8 @@ const ManageSkills = () => {
           <li key={skill._id} style={styles.listItem}>
             {skill.libelle} ({skill.code})
             <div>
-              <button onClick={() => handleEditClick(skill)} style={styles.button}>Edit</button>
-              <button onClick={() => handleDeleteSkill(skill._id)} style={styles.button}>Delete</button>
+              <button onClick={() => handleEditClick(skill)} style={styles.button}>MODIFIER</button>
+              <button onClick={() => handleDeleteSkill(skill._id)} style={styles.button}>SUPPRIMER</button>
             </div>
           </li>
         ))}
