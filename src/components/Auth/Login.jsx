@@ -10,6 +10,19 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.role);
+      window.location.reload();  // Reload the page to ensure the App component re-renders
+    } catch (error) {
+      console.error(error);
+      setError('Invalid name or password');
+    }
+  };
+
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const storedRole = localStorage.getItem('role');
@@ -22,24 +35,6 @@ const Login = () => {
       }
     }
   }, [navigate]);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('role', res.data.role);
-
-      if (res.data.role === 'employee') {
-        navigate('/profile');
-      } else if (res.data.role === 'hr_head') {
-        navigate('/all-employees');
-      }
-    } catch (error) {
-      console.error(error);
-      setError('Invalid name or password');
-    }
-  };
 
   return (
     <div style={styles.loginContainer}>
