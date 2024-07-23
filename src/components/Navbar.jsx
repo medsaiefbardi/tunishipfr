@@ -29,10 +29,10 @@ const Navbar = ({ role }) => {
               <Link to="/manage-skills" style={styles.navLink}>COMPETENCES</Link>
             </li>
             <li style={styles.navItem}>
-              <Link to="/manage-job-positions" style={styles.navLink}>FICHE DE POSTE</Link>
+              <Link to="/manage-job-positions" style={styles.navLink}>FICHES DE POSTE</Link>
             </li>
             <li style={styles.navItem}>
-              <Link to="/skills-matrix" style={styles.navLink}>Skills Matrix</Link>
+              <Link to="/skills-matrix" style={styles.navLink}>MATRICE</Link>
             </li>
           </>
         )}

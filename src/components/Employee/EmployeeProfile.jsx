@@ -24,7 +24,7 @@ const EmployeeProfile = () => {
 
         setEmployee(res.data);
       } catch (error) {
-        console.error('Profile fetch error:', error.message);
+       console.error(error);
         setError('Failed to fetch profile. Please ensure you are logged in.');
       }
     };
