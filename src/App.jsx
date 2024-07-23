@@ -22,7 +22,13 @@ const App = () => {
       setRole(decodedToken.role);
       setToken(storedToken);
     }
-    setLoading(false);
+    const loggedIn = localStorage.getItem('loggedIn');
+    if (loggedIn === 'true') {
+      localStorage.removeItem('loggedIn'); // Clear the flag
+      window.location.replace('/'); // Redirect to the base URL
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {

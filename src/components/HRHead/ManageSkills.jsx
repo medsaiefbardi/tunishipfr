@@ -133,7 +133,7 @@ const ManageSkills = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>Manage Skills</h1>
+      <h1 style={styles.heading}>COMPETENCES</h1>
       <form onSubmit={editSkill ? handleEditSkill : handleAddSkill} style={styles.form}>
         <input
           type="text"

@@ -62,11 +62,11 @@ const SkillMatrix = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>Skills Matrix</h1>
+      <h1 style={styles.heading}>MATRICE DE COMPETENCES</h1>
       <table style={styles.table}>
         <thead>
           <tr>
-            <th style={styles.headerCell}>Skill</th>
+            <th style={styles.headerCell}>COMPETENCE/EMPLOYE</th>
             {employees.map(employee => (
               <th key={employee._id} style={styles.headerCell}>{employee.name}</th>
             ))}
