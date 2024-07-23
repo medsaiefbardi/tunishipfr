@@ -19,9 +19,9 @@ const Login = ({ setToken, setRole }) => {
       setToken(res.data.token);
       setRole(res.data.role);
       if (res.data.role === 'employee') {
-        navigate('/profile');
+        navigate('/');
       } else if (res.data.role === 'hr_head') {
-        navigate('/all-employees');
+        navigate('/');
       }
     } catch (error) {
       console.error(error);
