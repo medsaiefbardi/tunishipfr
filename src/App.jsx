@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import EmployeeProfile from './components/Employee/EmployeeProfile';
@@ -14,33 +14,16 @@ const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [role, setRole] = useState(localStorage.getItem('role'));
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    const storedRole = localStorage.getItem('role');
-
-    if (storedToken && storedRole) {
+    if (storedToken) {
+      const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
+      setRole(decodedToken.role);
       setToken(storedToken);
-      setRole(storedRole);
-    } else {
-      setToken(null);
-      setRole(null);
     }
     setLoading(false);
   }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      if (token && role === 'hr_head') {
-        navigate('/all-employees');
-      } else if (token && role === 'employee') {
-        navigate('/profile');
-      } else {
-        navigate('/login');
-      }
-    }
-  }, [token, role, loading, navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
