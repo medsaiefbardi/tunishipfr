@@ -19,7 +19,7 @@ const Login = ({ setToken, setRole }) => {
       localStorage.setItem('loggedIn', 'true'); // Set a flag indicating successful login
       setToken(res.data.token);
       setRole(res.data.role);
-      window.location.reload();
+      // window.location.reload();
       window.location.replace('/'); // Reload the page to ensure the App component re-renders
     } catch (error) {
       console.error(error);
