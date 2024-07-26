@@ -20,7 +20,7 @@ const Login = ({ setToken, setRole }) => {
       setToken(res.data.token);
       setRole(res.data.role);
       // window.location.reload();
-      window.location.replace('/'); 
+      window.location.replace('/all-employees'); 
     } catch (error) {
       console.error(error);
       setError('Invalid name or password');

@@ -17,16 +17,18 @@ const App = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    const storedRole = localStorage.getItem('role');
-
-    if (storedToken && storedRole) {
+    if (storedToken) {
+      const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
+      setRole(decodedToken.role);
       setToken(storedToken);
-      setRole(storedRole);
-    } else {
-      setToken(null);
-      setRole(null);
     }
-    setLoading(false);
+    const loggedIn = localStorage.getItem('loggedIn');
+    if (loggedIn === 'true') {
+      localStorage.removeItem('loggedIn'); // Clear the flag
+      window.location.replace('/'); // Redirect to the base URL
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {
