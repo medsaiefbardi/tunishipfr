@@ -69,14 +69,14 @@ const EmployeeProfile = () => {
               </ul>
             </div>
             <div style={styles.col}>
-              <p style={styles.text}><strong>OBJECTIFS:</strong></p>
+              {/* <p style={styles.text}><strong>OBJECTIFS:</strong></p>
               <ul>
                 {jobPosition.objectifs.map((objectifs, index) => (
                   <li key={index} style={styles.listItem}>
                     <strong>{objectifs.name}:</strong> {objectifs.description}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
               <p style={styles.text}><strong>POUVOIRS:</strong></p>
               <ul>
                 {jobPosition.pouvoirs.map((pouvoir, index) => (

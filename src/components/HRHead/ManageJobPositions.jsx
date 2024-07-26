@@ -336,7 +336,7 @@ const ManageJobPositions = () => {
         <textarea type="text" name="evolutionH" value={selectedJobPosition ? selectedJobPosition.evolutionH : newJobPosition.evolutionH || ''} onChange={handleInputChange}  placeholder="Evolution Horizon" required style={styles.textarea} />
         <label>LIMITES</label>
         <textarea type="text" name="limites" value={selectedJobPosition ? selectedJobPosition.limites : newJobPosition.limites || ''} onChange={handleInputChange}  placeholder="Limitations" required style={styles.textarea} />
-        <label>OBJECTIVES</label>
+        {/* <label>OBJECTIVES</label>
         {selectedJobPosition ? selectedJobPosition.objectifs.map((objectifs, index) => (
           <div key={index} style={styles.flexRow}>
             <input type="text" name="name" value={objectifs.name || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')}  placeholder="Objectifs Name" required style={styles.input} />
@@ -348,8 +348,8 @@ const ManageJobPositions = () => {
             <textarea name="description" value={objectifs.description || ''} onChange={(e) => handleArrayInputChange(index, e, 'objectifs')} placeholder="Objectifs Description" required style={styles.textarea} />
           </div>
         ))}
-        <button type="button" onClick={() => handleAddArrayItem('objectifs')} style={styles.button}>AJOUTER OBJECTIF</button>
-        <label>Powers</label>
+        <button type="button" onClick={() => handleAddArrayItem('objectifs')} style={styles.button}>AJOUTER OBJECTIF</button> */}
+        <label>POUVOIRS</label>
         <input type="text" name="pouvoirs" value={selectedJobPosition ? selectedJobPosition.pouvoirs : newJobPosition.pouvoirs || ''} onChange={handleInputChange}  placeholder="Powers" required style={styles.textarea} />
 
         {/* Required Skills */}

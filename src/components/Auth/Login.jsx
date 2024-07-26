@@ -20,7 +20,7 @@ const Login = ({ setToken, setRole }) => {
       setToken(res.data.token);
       setRole(res.data.role);
       // window.location.reload();
-      window.location.replace('/'); // Reload the page to ensure the App component re-renders
+      window.location.replace('/'); 
     } catch (error) {
       console.error(error);
       setError('Invalid name or password');

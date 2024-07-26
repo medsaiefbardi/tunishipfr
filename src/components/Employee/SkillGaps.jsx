@@ -5,6 +5,7 @@ import axios from 'axios';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const skillLevels = {
+  'N/A': '0%',
   N: '25%',
   A: '50%',
   M: '75%',
@@ -86,14 +87,14 @@ const SkillGaps = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>Skill Overview</h1>
+      <h1 style={styles.heading}>MES COMPETENCES</h1>
       <table style={styles.table}>
         <thead>
           <tr>
-            <th>Skill Libelle</th>
-            <th>Skill Code</th>
-            <th>Current Skill Level</th>
-            <th>Required Skill Level</th>
+            <th>Libelle</th>
+            <th>Code</th>
+            <th>Niveau actuel</th>
+            <th>Niveau requis</th>
           </tr>
         </thead>
         <tbody>
