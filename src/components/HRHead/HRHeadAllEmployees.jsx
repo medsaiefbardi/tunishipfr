@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-
 const skillLevels = ['N/A', 'N', 'A', 'M', 'E'];
 
 const HRHeadAllEmployees = () => {
@@ -200,7 +199,7 @@ const HRHeadAllEmployees = () => {
       <h1 style={styles.heading}>EMPLOYES</h1>
       {selectedEmployee ? (
         <div>
-          <h2>MàJ EMLPOYE</h2>
+          <h2>MàJ EMPLOYE</h2>
           <form onSubmit={handleUpdateEmployee} style={styles.form}>
             <input
               type="text"
@@ -230,7 +229,7 @@ const HRHeadAllEmployees = () => {
                   required
                   style={styles.input}
                 >
-                  <option value="">ChOISIR POSTE</option>
+                  <option value="">CHOISIR POSTE</option>
                   {jobPositions.map(position => (
                     <option key={position._id} value={position._id}>
                       {position.title}
@@ -262,17 +261,19 @@ const HRHeadAllEmployees = () => {
         </div>
       ) : (
         <>
-          <ul style={styles.list}>
-            {employees.map(employee => (
-              <li key={employee._id} style={styles.listItem}>
-                {employee.name} - {employee.jobPosition ? employee.jobPosition.title : 'N/A'}
-                <div>
-                  <button onClick={() => handleSelectEmployee(employee)} style={styles.button}>MODIFIER</button>
-                  <button onClick={() => handleDeleteEmployee(employee._id)} style={styles.button}>SUPPRIMER</button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div style={styles.card}>
+            <ul style={styles.list}>
+              {employees.map(employee => (
+                <li key={employee._id} style={styles.listItem}>
+                  {employee.name} - {employee.jobPosition ? employee.jobPosition.title : 'N/A'}
+                  <div>
+                    <button onClick={() => handleSelectEmployee(employee)} style={styles.button}>MODIFIER</button>
+                    <button onClick={() => handleDeleteEmployee(employee._id)} style={styles.button}>SUPPRIMER</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
           <button onClick={() => setNewEmployeeVisible(!newEmployeeVisible)} style={styles.button}>
             {newEmployeeVisible ? 'ANNULER' : 'AJOUTER EMPLOYE'}
           </button>
@@ -289,7 +290,7 @@ const HRHeadAllEmployees = () => {
               />
               <input
                 type="password"
-                name="Mot de passe"
+                name="password"
                 value={newEmployee.password}
                 onChange={handleInputChange}
                 placeholder="Password"
@@ -382,6 +383,13 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     margin: '5px',
+  },
+  card: {
+    backgroundColor: '#87CEFA', // Sky blue background
+    borderRadius: '8px',
+    padding: '20px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+    marginBottom: '20px',
   },
   list: {
     listStyleType: 'none',

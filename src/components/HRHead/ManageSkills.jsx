@@ -7,10 +7,7 @@ const skillTypes = [
   'connaissance',
   'savoir faire',
   'savoir etre',
-  'mvv',
-  'tuniship qhse',
-  'competence bureautique',
-  'competence linguistique'
+ 
 ];
 
 const skillLevels = ['N/A','N', 'A', 'M', 'E'];
