@@ -71,43 +71,6 @@ const EmployeeProfile = () => {
                 <td>{jobPosition.raison}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>KPIs Qualitatifs / Quantitatifs</td>
-                <td>
-                  <ul>
-                    {jobPosition.kpiQualt.map((kpi, index) => (
-                      <li key={index}>{kpi}</li>
-                    ))}
-                    {jobPosition.kpiQuant.map((kpi, index) => (
-                      <li key={index}>{kpi}</li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td style={styles.tableHeader}>Évolution Verticale / Horizontale</td>
-                <td>{jobPosition.evolutionV} / {jobPosition.evolutionH}</td>
-              </tr>
-              <tr>
-                <td style={styles.tableHeader}>Limites</td>
-                <td>
-                  <ul>
-                    {jobPosition.limites.map((limite, index) => (
-                      <li key={index}>{limite}</li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td style={styles.tableHeader}>Pouvoirs</td>
-                <td>
-                  <ul>
-                    {jobPosition.pouvoirs.map((pouvoir, index) => (
-                      <li key={index}>{pouvoir}</li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
                 <td style={styles.tableHeader}>Missions</td>
                 <td>
                   <ul>
@@ -156,13 +119,44 @@ const EmployeeProfile = () => {
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Expertise Profile</td>
+                <td style={styles.tableHeader}>KPIs Qualitatifs / Quantitatifs</td>
+                <td>
+                  <div style={styles.col}>
+                    <ul>
+                      {jobPosition.kpiQualt.map((kpi, index) => (
+                        <li key={index}>{kpi}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div style={styles.col}>
+                    <ul>
+                      {jobPosition.kpiQuant.map((kpi, index) => (
+                        <li key={index}>{kpi}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Évolution Verticale / Horizontale</td>
+                <td>{jobPosition.evolutionV} / {jobPosition.evolutionH}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Limites</td>
                 <td>
                   <ul>
-                    {jobPosition.tachesEP.map((tschema, index) => (
-                      <li key={index}>
-                        <strong>Int:</strong> {tschema.int} <strong>MoyOut:</strong> {tschema.moyOut}
-                      </li>
+                    {jobPosition.limites.map((limite, index) => (
+                      <li key={index}>{limite}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Pouvoirs</td>
+                <td>
+                  <ul>
+                    {jobPosition.pouvoirs.map((pouvoir, index) => (
+                      <li key={index}>{pouvoir}</li>
                     ))}
                   </ul>
                 </td>
@@ -212,6 +206,12 @@ const styles = {
   },
   tableRow: {
     borderBottom: '1px solid #ddd',
+  },
+  col: {
+    display: 'inline-block',
+    width: '45%',
+    verticalAlign: 'top',
+    padding: '5px',
   },
   text: {
     fontSize: '18px',
