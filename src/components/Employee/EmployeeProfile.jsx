@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const EmployeeProfile = () => {
@@ -24,7 +23,7 @@ const EmployeeProfile = () => {
 
         setEmployee(res.data);
       } catch (error) {
-       console.error(error);
+        console.error(error);
         setError('Failed to fetch profile. Please ensure you are logged in.');
       }
     };
@@ -40,96 +39,137 @@ const EmployeeProfile = () => {
     <div style={styles.container}>
       <h1 style={styles.heading}>{employee.name}</h1>
       {jobPosition ? (
-        <>
-          <div style={styles.row}>
-            <div style={styles.col}>
-              <p style={styles.text}><strong>POSITION:</strong> {jobPosition.title}</p>
-              <p style={styles.text}><strong>REFERENCE:</strong> {jobPosition.ref}</p>
-              <p style={styles.text}><strong>SERVICE:</strong> {jobPosition.service}</p>
-              <p style={styles.text}><strong>LIEU:</strong> {jobPosition.lieu}</p>
-              <p style={styles.text}><strong>INTERIMAIRE:</strong> {jobPosition.interimaire}</p>
-            </div>
-            <div style={styles.col}>
-              <p style={styles.text}><strong>LIAISONS HIERARCHIQUES:</strong> {jobPosition.liaisonsHiera}</p>
-              <p style={styles.text}><strong>LIAISONS FONCTIONNELLES:</strong> {jobPosition.liaisonsFonc}</p>
-              <p style={styles.text}><strong>RAISON:</strong> {jobPosition.raison}</p>
-              <p style={styles.text}><strong>KPIs QUANTITATIVES:</strong> {jobPosition.kpiQuant}</p>
-              <p style={styles.text}><strong>KPIs QUALITATIVES:</strong> {jobPosition.kpiQualt}</p>
-            </div>
-          </div>
-          <div style={styles.row}>
-            <div style={styles.col}>
-              <p style={styles.text}><strong>EVOLUTION VERTICALE:</strong> {jobPosition.evolutionV}</p>
-              <p style={styles.text}><strong>EVOLUTION HORIZONTALE:</strong> {jobPosition.evolutionH}</p>
-              <p style={styles.text}><strong>LIMITES:</strong></p>
-              <ul>
-                {jobPosition.limites.map((limite, index) => (
-                  <li key={index} style={styles.listItem}>{limite}</li>
-                ))}
-              </ul>
-            </div>
-            <div style={styles.col}>
-              {/* <p style={styles.text}><strong>OBJECTIFS:</strong></p>
-              <ul>
-                {jobPosition.objectifs.map((objectifs, index) => (
-                  <li key={index} style={styles.listItem}>
-                    <strong>{objectifs.name}:</strong> {objectifs.description}
-                  </li>
-                ))}
-              </ul> */}
-              <p style={styles.text}><strong>POUVOIRS:</strong></p>
-              <ul>
-                {jobPosition.pouvoirs.map((pouvoir, index) => (
-                  <li key={index} style={styles.listItem}>{pouvoir}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div style={styles.row}>
-            <div style={styles.colFull}>
-              <p style={styles.text}><strong>MISSIONS:</strong></p>
-              <ul>
-                {jobPosition.mission.map((mission, index) => (
-                  <li key={index} style={styles.listItem}>
-                    <strong>{mission.name}:</strong> {mission.description}
-                  </li>
-                ))}
-              </ul>
-              <p style={styles.text}><strong>TACHES OPERATIONNELLES:</strong></p>
-              <ul>
-                {jobPosition.tacheOper.map((task, index) => (
-                  <li key={index} style={styles.listItem}>
-                    <strong>{task.name}:</strong> {task.description}
-                  </li>
-                ))}
-              </ul>
-              <p style={styles.text}><strong>TACHES OCCASIONNELLES:</strong></p>
-              <ul>
-                {jobPosition.tacheOccas.map((task, index) => (
-                  <li key={index} style={styles.listItem}>
-                    <strong>{task.name}:</strong> {task.description}
-                  </li>
-                ))}
-              </ul>
-              <p style={styles.text}><strong>TACHES STRATIGIQUES:</strong></p>
-              <ul>
-                {jobPosition.tachesStrat.map((task, index) => (
-                  <li key={index} style={styles.listItem}>
-                    <strong>{task.name}:</strong> {task.description}
-                  </li>
-                ))}
-              </ul>
-              <p style={styles.text}><strong>Expertise Profile:</strong></p>
-              <ul>
-                {jobPosition.tachesEP.map((tschema, index) => (
-                  <li key={index} style={styles.listItem}>
-                    <strong>Int:</strong> {tschema.int} <strong>MoyOut:</strong> {tschema.moyOut}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </>
+        <div style={styles.card}>
+          <table style={styles.table}>
+            <tbody>
+              <tr>
+                <td style={styles.tableHeader}>Intitulé du poste</td>
+                <td>{jobPosition.title}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Référence</td>
+                <td>{jobPosition.ref}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Service</td>
+                <td>{jobPosition.service}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Lieu</td>
+                <td>{jobPosition.lieu}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Intérimaire</td>
+                <td>{jobPosition.interimaire}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Liaisons Hiérarchiques / Fonctionnelles</td>
+                <td>{jobPosition.liaisonsHiera} / {jobPosition.liaisonsFonc}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Raison</td>
+                <td>{jobPosition.raison}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>KPIs Qualitatifs / Quantitatifs</td>
+                <td>
+                  <ul>
+                    {jobPosition.kpiQualt.map((kpi, index) => (
+                      <li key={index}>{kpi}</li>
+                    ))}
+                    {jobPosition.kpiQuant.map((kpi, index) => (
+                      <li key={index}>{kpi}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Évolution Verticale / Horizontale</td>
+                <td>{jobPosition.evolutionV} / {jobPosition.evolutionH}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Limites</td>
+                <td>
+                  <ul>
+                    {jobPosition.limites.map((limite, index) => (
+                      <li key={index}>{limite}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Pouvoirs</td>
+                <td>
+                  <ul>
+                    {jobPosition.pouvoirs.map((pouvoir, index) => (
+                      <li key={index}>{pouvoir}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Missions</td>
+                <td>
+                  <ul>
+                    {jobPosition.mission.map((mission, index) => (
+                      <li key={index}>
+                        <strong>{mission.name}:</strong> {mission.description}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Tâches Stratégiques</td>
+                <td>
+                  <ul>
+                    {jobPosition.tachesStrat.map((task, index) => (
+                      <li key={index}>
+                        <strong>{task.name}:</strong> {task.description}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Tâches Opérationnelles</td>
+                <td>
+                  <ul>
+                    {jobPosition.tacheOper.map((task, index) => (
+                      <li key={index}>
+                        <strong>{task.name}:</strong> {task.description}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Tâches Occasionnelles</td>
+                <td>
+                  <ul>
+                    {jobPosition.tacheOccas.map((task, index) => (
+                      <li key={index}>
+                        <strong>{task.name}:</strong> {task.description}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td style={styles.tableHeader}>Expertise Profile</td>
+                <td>
+                  <ul>
+                    {jobPosition.tachesEP.map((tschema, index) => (
+                      <li key={index}>
+                        <strong>Int:</strong> {tschema.int} <strong>MoyOut:</strong> {tschema.moyOut}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p style={styles.text}>No position assigned</p>
       )}
@@ -155,19 +195,23 @@ const styles = {
     color: '#333',
     textAlign: 'center',
   },
-  row: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '20px',
+  card: {
+    backgroundColor: '#87CEFA', // Sky blue background
+    borderRadius: '8px',
+    padding: '20px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   },
-  col: {
-    flex: '1',
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+  },
+  tableHeader: {
+    fontWeight: 'bold',
+    background: '#E0FFFF', // Light cyan background for headers
     padding: '10px',
   },
-  colFull: {
-    flex: '1',
-    padding: '10px',
-    flexBasis: '100%',
+  tableRow: {
+    borderBottom: '1px solid #ddd',
   },
   text: {
     fontSize: '18px',
