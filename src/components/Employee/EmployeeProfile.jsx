@@ -41,6 +41,12 @@ const EmployeeProfile = () => {
       {jobPosition ? (
         <div style={styles.card}>
           <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.tableHeader}>Attribute</th>
+                <th style={styles.tableHeader}>Details</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
                 <td style={styles.tableHeader}>Intitulé du poste</td>
