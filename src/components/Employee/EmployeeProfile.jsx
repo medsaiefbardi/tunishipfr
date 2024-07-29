@@ -41,12 +41,6 @@ const EmployeeProfile = () => {
       {jobPosition ? (
         <div style={styles.card}>
           <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.tableHeader}>Attribute</th>
-                <th style={styles.tableHeader}>Details</th>
-              </tr>
-            </thead>
             <tbody>
               <tr>
                 <td style={styles.tableCell}>Intitulé du poste</td>
@@ -71,8 +65,6 @@ const EmployeeProfile = () => {
               <tr>
                 <td style={styles.tableCell}>Liaisons Hiérarchiques</td>
                 <td style={styles.tableCell}>{jobPosition.liaisonsHiera}</td>
-              </tr>
-              <tr>
                 <td style={styles.tableCell}>Liaisons Fonctionnelles</td>
                 <td style={styles.tableCell}>{jobPosition.liaisonsFonc}</td>
               </tr>
@@ -137,8 +129,6 @@ const EmployeeProfile = () => {
                     ))}
                   </ul>
                 </td>
-              </tr>
-              <tr>
                 <td style={styles.tableCell}>KPIs Quantitatifs</td>
                 <td style={styles.tableCell}>
                   <ul>
@@ -151,8 +141,6 @@ const EmployeeProfile = () => {
               <tr>
                 <td style={styles.tableCell}>Évolution Verticale</td>
                 <td style={styles.tableCell}>{jobPosition.evolutionV}</td>
-              </tr>
-              <tr>
                 <td style={styles.tableCell}>Évolution Horizontale</td>
                 <td style={styles.tableCell}>{jobPosition.evolutionH}</td>
               </tr>
@@ -223,12 +211,6 @@ const styles = {
   tableCell: {
     padding: '10px',
     border: '1px solid #ddd',
-  },
-  col: {
-    display: 'inline-block',
-    width: '45%',
-    verticalAlign: 'top',
-    padding: '5px',
   },
   text: {
     fontSize: '18px',
