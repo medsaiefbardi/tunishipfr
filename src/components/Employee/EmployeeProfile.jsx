@@ -49,36 +49,40 @@ const EmployeeProfile = () => {
             </thead>
             <tbody>
               <tr>
-                <td style={styles.tableHeader}>Intitulé du poste</td>
-                <td>{jobPosition.title}</td>
+                <td style={styles.tableCell}>Intitulé du poste</td>
+                <td style={styles.tableCell}>{jobPosition.title}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Référence</td>
-                <td>{jobPosition.ref}</td>
+                <td style={styles.tableCell}>Référence</td>
+                <td style={styles.tableCell}>{jobPosition.ref}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Service</td>
-                <td>{jobPosition.service}</td>
+                <td style={styles.tableCell}>Service</td>
+                <td style={styles.tableCell}>{jobPosition.service}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Lieu</td>
-                <td>{jobPosition.lieu}</td>
+                <td style={styles.tableCell}>Lieu</td>
+                <td style={styles.tableCell}>{jobPosition.lieu}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Intérimaire</td>
-                <td>{jobPosition.interimaire}</td>
+                <td style={styles.tableCell}>Intérimaire</td>
+                <td style={styles.tableCell}>{jobPosition.interimaire}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Liaisons Hiérarchiques / Fonctionnelles</td>
-                <td>{jobPosition.liaisonsHiera} / {jobPosition.liaisonsFonc}</td>
+                <td style={styles.tableCell}>Liaisons Hiérarchiques</td>
+                <td style={styles.tableCell}>{jobPosition.liaisonsHiera}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Raison</td>
-                <td>{jobPosition.raison}</td>
+                <td style={styles.tableCell}>Liaisons Fonctionnelles</td>
+                <td style={styles.tableCell}>{jobPosition.liaisonsFonc}</td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Missions</td>
-                <td>
+                <td style={styles.tableCell}>Raison</td>
+                <td style={styles.tableCell}>{jobPosition.raison}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableCell}>Missions</td>
+                <td style={styles.tableCell}>
                   <ul>
                     {jobPosition.mission.map((mission, index) => (
                       <li key={index}>
@@ -89,8 +93,8 @@ const EmployeeProfile = () => {
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Tâches Stratégiques</td>
-                <td>
+                <td style={styles.tableCell}>Tâches Stratégiques</td>
+                <td style={styles.tableCell}>
                   <ul>
                     {jobPosition.tachesStrat.map((task, index) => (
                       <li key={index}>
@@ -101,8 +105,8 @@ const EmployeeProfile = () => {
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Tâches Opérationnelles</td>
-                <td>
+                <td style={styles.tableCell}>Tâches Opérationnelles</td>
+                <td style={styles.tableCell}>
                   <ul>
                     {jobPosition.tacheOper.map((task, index) => (
                       <li key={index}>
@@ -113,8 +117,8 @@ const EmployeeProfile = () => {
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Tâches Occasionnelles</td>
-                <td>
+                <td style={styles.tableCell}>Tâches Occasionnelles</td>
+                <td style={styles.tableCell}>
                   <ul>
                     {jobPosition.tacheOccas.map((task, index) => (
                       <li key={index}>
@@ -125,31 +129,36 @@ const EmployeeProfile = () => {
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>KPIs Qualitatifs / Quantitatifs</td>
-                <td>
-                  <div style={styles.col}>
-                    <ul>
-                      {jobPosition.kpiQualt.map((kpi, index) => (
-                        <li key={index}>{kpi}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div style={styles.col}>
-                    <ul>
-                      {jobPosition.kpiQuant.map((kpi, index) => (
-                        <li key={index}>{kpi}</li>
-                      ))}
-                    </ul>
-                  </div>
+                <td style={styles.tableCell}>KPIs Qualitatifs</td>
+                <td style={styles.tableCell}>
+                  <ul>
+                    {jobPosition.kpiQualt.map((kpi, index) => (
+                      <li key={index}>{kpi}</li>
+                    ))}
+                  </ul>
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Évolution Verticale / Horizontale</td>
-                <td>{jobPosition.evolutionV} / {jobPosition.evolutionH}</td>
+                <td style={styles.tableCell}>KPIs Quantitatifs</td>
+                <td style={styles.tableCell}>
+                  <ul>
+                    {jobPosition.kpiQuant.map((kpi, index) => (
+                      <li key={index}>{kpi}</li>
+                    ))}
+                  </ul>
+                </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Limites</td>
-                <td>
+                <td style={styles.tableCell}>Évolution Verticale</td>
+                <td style={styles.tableCell}>{jobPosition.evolutionV}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableCell}>Évolution Horizontale</td>
+                <td style={styles.tableCell}>{jobPosition.evolutionH}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableCell}>Limites</td>
+                <td style={styles.tableCell}>
                   <ul>
                     {jobPosition.limites.map((limite, index) => (
                       <li key={index}>{limite}</li>
@@ -158,8 +167,8 @@ const EmployeeProfile = () => {
                 </td>
               </tr>
               <tr>
-                <td style={styles.tableHeader}>Pouvoirs</td>
-                <td>
+                <td style={styles.tableCell}>Pouvoirs</td>
+                <td style={styles.tableCell}>
                   <ul>
                     {jobPosition.pouvoirs.map((pouvoir, index) => (
                       <li key={index}>{pouvoir}</li>
@@ -209,9 +218,11 @@ const styles = {
     fontWeight: 'bold',
     background: '#E0FFFF', // Light cyan background for headers
     padding: '10px',
+    border: '1px solid #ddd',
   },
-  tableRow: {
-    borderBottom: '1px solid #ddd',
+  tableCell: {
+    padding: '10px',
+    border: '1px solid #ddd',
   },
   col: {
     display: 'inline-block',
