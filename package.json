@@ -24,7 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://tunishipbck.onrender.com",
+  "proxy": "https://dnatunishipbck.onrender.com",
   "eslintConfig": {
     "extends": [
       "react-app",

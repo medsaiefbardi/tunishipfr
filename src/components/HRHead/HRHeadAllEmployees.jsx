@@ -10,28 +10,16 @@ const HRHeadAllEmployees = () => {
   const [jobPositions, setJobPositions] = useState([]);
   const [skills, setSkills] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [newEmployeeVisible, setNewEmployeeVisible] = useState(false);
-  const [newEmployee, setNewEmployee] = useState({
-    name: '',
-    password: '',
-    role: 'employee',
-    jobPosition: '',
-    skills: []
-  });
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No token found. User not authenticated.');
-        }
+        if (!token) throw new Error('No token found. User not authenticated.');
 
         const res = await axios.get(`${apiUrl}/api/employees`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         setEmployees(res.data);
@@ -44,14 +32,10 @@ const HRHeadAllEmployees = () => {
     const fetchJobPositions = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No token found. User not authenticated.');
-        }
+        if (!token) throw new Error('No token found. User not authenticated.');
 
         const res = await axios.get(`${apiUrl}/api/job-positions`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         setJobPositions(res.data);
@@ -64,21 +48,13 @@ const HRHeadAllEmployees = () => {
     const fetchSkills = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No token found. User not authenticated.');
-        }
+        if (!token) throw new Error('No token found. User not authenticated.');
 
         const res = await axios.get(`${apiUrl}/api/skills`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         setSkills(res.data);
-        setNewEmployee(newEmployee => ({
-          ...newEmployee,
-          skills: res.data.map(skill => ({ skill: skill._id, level: 'N/A' }))
-        }));
       } catch (error) {
         console.error('Error fetching skills:', error.message);
         setError('Failed to fetch skills.');
@@ -89,31 +65,6 @@ const HRHeadAllEmployees = () => {
     fetchJobPositions();
     fetchSkills();
   }, []);
-
-  const handleAddEmployee = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
-      const res = await axios.post(`${apiUrl}/api/employees`, newEmployee, { headers });
-      setEmployees([...employees, res.data]);
-      setNewEmployeeVisible(false);
-      setNewEmployee({
-        name: '',
-        password: '',
-        role: 'employee',
-        jobPosition: '',
-        skills: skills.map(skill => ({ skill: skill._id, level: 'N/A' }))
-      });
-    } catch (error) {
-      console.error('Error adding employee:', error.message);
-      setError('Failed to add employee.');
-    }
-  };
 
   const handleDeleteEmployee = async (id) => {
     try {
@@ -139,133 +90,20 @@ const HRHeadAllEmployees = () => {
     setSelectedEmployee({ ...employee, skills: employeeSkills });
   };
 
-  const handleUpdateEmployee = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
-      const { _id, name, role, jobPosition, skills } = selectedEmployee;
-      const payload = {
-        name,
-        role,
-        jobPosition: jobPosition ? jobPosition._id : null,
-        skills: skills.map(({ skill, level }) => ({ skill: skill._id || skill, level }))
-      };
-
-      const res = await axios.put(`${apiUrl}/api/employees/${_id}`, payload, { headers });
-      setEmployees(employees.map(emp => emp._id === selectedEmployee._id ? res.data : emp));
-      setSelectedEmployee(null);
-    } catch (error) {
-      console.error('Error updating employee:', error.message);
-      setError('Failed to update employee.');
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewEmployee({ ...newEmployee, [name]: value });
-  };
-
-  const handleEmployeeInputChange = (e) => {
-    const { name, value } = e.target;
-    setSelectedEmployee({ ...selectedEmployee, [name]: value });
-  };
-
-  const handleSkillChange = (index, e) => {
-    const { name, value } = e.target;
-    const skillsCopy = [...newEmployee.skills];
-    skillsCopy[index][name] = value;
-    setNewEmployee({ ...newEmployee, skills: skillsCopy });
-  };
-
-  const handleEmployeeSkillChange = (index, e) => {
-    const { name, value } = e.target;
-    const skillsCopy = [...selectedEmployee.skills];
-    skillsCopy[index][name] = value;
-    setSelectedEmployee({ ...selectedEmployee, skills: skillsCopy });
-  };
-
-  const handleBackToList = () => {
-    setSelectedEmployee(null);
-  };
-
   return (
     <div style={styles.container}>
       {error && <p style={styles.error}>{error}</p>}
       <h1 style={styles.heading}>EMPLOYES</h1>
-      {selectedEmployee ? (
-        <div>
-          <h2>MàJ EMPLOYE</h2>
-          <form onSubmit={handleUpdateEmployee} style={styles.form}>
-            <input
-              type="text"
-              name="name"
-              value={selectedEmployee.name}
-              onChange={handleEmployeeInputChange}
-              placeholder="Nom"
-              required
-              style={styles.input}
-            />
-            <select
-              name="role"
-              value={selectedEmployee.role}
-              onChange={handleEmployeeInputChange}
-              required
-              style={styles.input}
-            >
-              <option value="employee">Employé</option>
-              <option value="hr_head">RH</option>
-            </select>
-            {selectedEmployee.role === 'employee' && (
-              <>
-                <select
-                  name="jobPosition"
-                  value={selectedEmployee.jobPosition ? selectedEmployee.jobPosition._id : ''}
-                  onChange={handleEmployeeInputChange}
-                  required
-                  style={styles.input}
-                >
-                  <option value="">CHOISIR POSTE</option>
-                  {jobPositions.map(position => (
-                    <option key={position._id} value={position._id}>
-                      {position.title}
-                    </option>
-                  ))}
-                </select>
-                <h3>COMPETENCES</h3>
-                {selectedEmployee.skills.map((skill, index) => (
-                  <div key={index} style={styles.skillRow}>
-                    <label>{skills.find(s => s._id === skill.skill)?.code || ''}</label>
-                    <select
-                      name="level"
-                      value={skill.level}
-                      onChange={(e) => handleEmployeeSkillChange(index, e)}
-                      required
-                      style={styles.input}
-                    >
-                      {skillLevels.map(level => (
-                        <option key={level} value={level}>{level}</option>
-                      ))}
-                    </select>
-                  </div>
-                ))}
-              </>
-            )}
-            <button type="submit" style={styles.button}>METTRE A JOUR</button>
-            <button type="button" onClick={handleBackToList} style={styles.button}>REVENIR</button>
-          </form>
-        </div>
-      ) : (
+      {!selectedEmployee ? (
         <>
           <div style={styles.card}>
             <ul style={styles.list}>
               {employees.map(employee => (
                 <li key={employee._id} style={styles.listItem}>
-                  {employee.name} - {employee.jobPosition ? employee.jobPosition.title : 'N/A'}
+                  <span>
+                    {employee.name} - {employee.jobPosition?.title || 'N/A'} 
+                    <strong> - Évaluation : {employee.evaluation?.totalEvaluation || 'Non évalué'}</strong>
+                  </span>
                   <div>
                     <button onClick={() => handleSelectEmployee(employee)} style={styles.button}>MODIFIER</button>
                     <button onClick={() => handleDeleteEmployee(employee._id)} style={styles.button}>SUPPRIMER</button>
@@ -274,78 +112,48 @@ const HRHeadAllEmployees = () => {
               ))}
             </ul>
           </div>
-          <button onClick={() => setNewEmployeeVisible(!newEmployeeVisible)} style={styles.button}>
-            {newEmployeeVisible ? 'ANNULER' : 'AJOUTER EMPLOYE'}
-          </button>
-          {newEmployeeVisible && (
-            <form onSubmit={handleAddEmployee} style={styles.form}>
-              <input
-                type="text"
-                name="name"
-                value={newEmployee.name}
-                onChange={handleInputChange}
-                placeholder="Nom"
-                required
-                style={styles.input}
-              />
-              <input
-                type="password"
-                name="password"
-                value={newEmployee.password}
-                onChange={handleInputChange}
-                placeholder="Password"
-                required
-                style={styles.input}
-              />
-              <select
-                name="role"
-                value={newEmployee.role}
-                onChange={handleInputChange}
-                required
-                style={styles.input}
-              >
-                <option value="employee">EMPLOYE</option>
-                <option value="hr_head">RH</option>
-              </select>
-              {newEmployee.role === 'employee' && (
-                <>
+        </>
+      ) : (
+        <div>
+          <h2>MàJ EMPLOYE</h2>
+          <form style={styles.form}>
+            <input
+              type="text"
+              name="name"
+              value={selectedEmployee.name}
+              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, name: e.target.value })}
+              placeholder="Nom"
+              required
+              style={styles.input}
+            />
+            <h3>COMPETENCES</h3>
+            <div style={styles.skillsGrid}>
+              {selectedEmployee.skills.map((skill, index) => (
+                <div key={index} style={styles.skillItem}>
+                  <label>
+                    {skills.find(s => s._id === skill.skill)?.code || ''} - Niveau :
+                  </label>
                   <select
-                    name="jobPosition"
-                    value={newEmployee.jobPosition}
-                    onChange={handleInputChange}
+                    name="level"
+                    value={skill.level}
+                    onChange={(e) => {
+                      const updatedSkills = [...selectedEmployee.skills];
+                      updatedSkills[index].level = e.target.value;
+                      setSelectedEmployee({ ...selectedEmployee, skills: updatedSkills });
+                    }}
                     required
                     style={styles.input}
                   >
-                    <option value="">CHOISIR POSTE</option>
-                    {jobPositions.map(position => (
-                      <option key={position._id} value={position._id}>
-                        {position.title}
-                      </option>
+                    {skillLevels.map(level => (
+                      <option key={level} value={level}>{level}</option>
                     ))}
                   </select>
-                  <h3>Skills</h3>
-                  {skills.map((skill, index) => (
-                    <div key={index} style={styles.skillRow}>
-                      <label>{skill.code}</label>
-                      <select
-                        name="level"
-                        value={newEmployee.skills[index] ? newEmployee.skills[index].level : 'N/A'}
-                        onChange={(e) => handleSkillChange(index, e)}
-                        required
-                        style={styles.input}
-                      >
-                        {skillLevels.map(level => (
-                          <option key={level} value={level}>{level}</option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
-                </>
-              )}
-              <button type="submit" style={styles.button}>AJOUTER EMPLOYE</button>
-            </form>
-          )}
-        </>
+                </div>
+              ))}
+            </div>
+            <button type="button" onClick={() => setSelectedEmployee(null)} style={styles.button}>REVENIR</button>
+          </form>
+        </div>
       )}
     </div>
   );
@@ -362,30 +170,8 @@ const styles = {
     color: '#0066ff',
     marginBottom: '20px',
   },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: '20px',
-  },
-  input: {
-    display: 'block',
-    width: '100%',
-    padding: '10px',
-    marginBottom: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-  },
-  button: {
-    padding: '10px 20px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    margin: '5px',
-  },
   card: {
-    backgroundColor: '#87CEFA', // Sky blue background
+    backgroundColor: '#87CEFA',
     borderRadius: '8px',
     padding: '20px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
@@ -403,15 +189,34 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  error: {
-    color: 'red',
+  button: {
+    padding: '10px 20px',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    margin: '5px',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
     marginBottom: '20px',
   },
-  skillRow: {
+  input: {
+    padding: '10px',
+    margin: '10px 0',
+    borderRadius: '5px',
+    border: '1px solid #ddd',
+  },
+  skillsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(8, 1fr)',
+    gap: '10px',
+  },
+  skillItem: {
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '10px',
+    flexDirection: 'column',
   },
 };
 

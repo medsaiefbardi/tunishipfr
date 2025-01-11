@@ -34,6 +34,9 @@ const Navbar = ({ role }) => {
             <li style={styles.navItem}>
               <Link to="/skills-matrix" style={styles.navLink}>MATRICE</Link>
             </li>
+            <li style={styles.navItem}>
+              <Link to="/evolution" style={styles.navLink}>Evolution</Link>
+            </li>
           </>
         )}
         <li style={styles.navItem}>

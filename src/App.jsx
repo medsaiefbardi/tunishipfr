@@ -7,29 +7,42 @@ import SkillGaps from './components/Employee/SkillGaps';
 import HRHeadAllEmployees from './components/HRHead/HRHeadAllEmployees';
 import Navbar from './components/Navbar';
 import ManageSkills from './components/HRHead/ManageSkills';
+import SkillDetail from './components/HRHead/SkillDetail';
 import ManageJobPositions from './components/HRHead/ManageJobPositions';
 import SkillMatrix from './components/HRHead/SkillMatrix';
+import Evaluation from './components/HRHead/Evaluation';
 
 const App = () => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [role, setRole] = useState(localStorage.getItem('role'));
+  const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
-      const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
-      setRole(decodedToken.role);
       setToken(storedToken);
-    }
-    const loggedIn = localStorage.getItem('loggedIn');
-    if (loggedIn === 'true') {
-      localStorage.removeItem('loggedIn'); // Clear the flag
-      window.location.replace('/'); // Redirect to the base URL
+      try {
+        const decodedToken = JSON.parse(atob(storedToken.split('.')[1]));
+        setRole(decodedToken.role);
+        console.log('Decoded token:', decodedToken);
+        console.log('User role:', decodedToken.role);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        setToken(null);
+        setRole(null);
+      }
     } else {
-      setLoading(false);
+      setToken(null);
+      setRole(null);
     }
+    setLoading(false);
   }, []);
+
+  const isAuthenticated = () => !!token;
+
+  const isAuthorized = (requiredRole) => {
+    return token && role === requiredRole;
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -37,29 +50,64 @@ const App = () => {
 
   return (
     <Router>
-      {token && <Navbar role={role} />}
+      {isAuthenticated() && <Navbar role={role} />}
       <Routes>
+        {/* Public Routes */}
         <Route path="/login" element={<Login setToken={setToken} setRole={setRole} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={token ? <EmployeeProfile /> : <Navigate to="/login" />} />
-        <Route path="/skill-gaps" element={token && role === 'employee' ? <SkillGaps /> : <Navigate to="/login" />} />
-        {role === 'hr_head' ? (
-          <>
-            <Route path="/all-employees" element={<HRHeadAllEmployees />} />
-            <Route path="/manage-skills" element={<ManageSkills />} />
-            <Route path="/manage-job-positions" element={<ManageJobPositions />} />
-            <Route path="/skills-matrix" element={<SkillMatrix />} />
-          </>
-        ) : (
-          <>
-            <Route path="/all-employees" element={<Navigate to="/profile" />} />
-            <Route path="/manage-skills" element={<Navigate to="/profile" />} />
-            <Route path="/skills/:id" element={<Navigate to="/profile" />} />
-            <Route path="/manage-job-positions" element={<Navigate to="/profile" />} />
-            <Route path="/skills-matrix" element={<Navigate to="/profile" />} />
-          </>
-        )}
-        <Route path="/" element={<Navigate to={token ? (role === 'hr_head' ? "/all-employees" : "/profile") : "/login"} />} />
+
+        {/* Employee Routes */}
+        <Route
+          path="/profile"
+          element={isAuthenticated() ? <EmployeeProfile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/skill-gaps"
+          element={isAuthorized('employee') ? <SkillGaps /> : <Navigate to="/login" />}
+        />
+
+        {/* HR Head Routes */}
+        <Route
+          path="/all-employees"
+          element={isAuthorized('hr_head') ? <HRHeadAllEmployees /> : <Navigate to="/profile" />}
+        />
+        <Route
+          path="/manage-skills"
+          element={isAuthorized('hr_head') ? <ManageSkills /> : <Navigate to="/profile" />}
+        />
+        <Route
+          path="/skills/:id"
+          element={isAuthorized('hr_head') ? <SkillDetail /> : <Navigate to="/profile" />}
+        />
+        <Route
+          path="/manage-job-positions"
+          element={isAuthorized('hr_head') ? <ManageJobPositions /> : <Navigate to="/profile" />}
+        />
+        <Route
+          path="/evaluation"
+          element={isAuthorized('hr_head') ? <Evaluation /> : <Navigate to="/profile" />}
+        />
+        <Route
+          path="/skills-matrix"
+          element={isAuthorized('hr_head') ? <SkillMatrix /> : <Navigate to="/profile" />}
+        />
+
+        {/* Default Route */}
+        <Route
+          path="/"
+          element={
+            isAuthorized('hr_head') ? (
+              <Navigate to="/all-employees" />
+            ) : isAuthorized('employee') ? (
+              <Navigate to="/profile" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        {/* Fallback Route */}
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );
