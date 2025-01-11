@@ -13,19 +13,23 @@ const Login = ({ setToken, setRole }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${apiUrl}/api/auth/login`, { name, password });
+      const payload = { name, password };
+      console.log("Payload envoyé :", payload); // Vérifiez les données envoyées
+      const res = await axios.post(`${apiUrl}/api/auth/login`, payload);
+  
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
-      localStorage.setItem('loggedIn', 'true'); // Set a flag indicating successful login
+  
       setToken(res.data.token);
       setRole(res.data.role);
-      // window.location.reload();
-      window.location.replace('/'); 
+  
+      window.location.replace('/'); // Redirection après connexion
     } catch (error) {
-      console.error(error);
-      setError('Invalid name or password');
+      console.error("Erreur lors de la connexion :", error.response?.data || error.message);
+      setError(error.response?.data?.msg || "Erreur lors de la connexion.");
     }
   };
+  
 
   return (
     <div style={styles.loginContainer}>
