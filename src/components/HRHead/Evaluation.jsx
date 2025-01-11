@@ -88,7 +88,7 @@ const Evaluation = () => {
   // Fonction pour charger les employés
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get(`${API_URL}/employees`, {
+      const response = await axios.get(`${API_URL}/api/employees`, {
         headers: getAuthHeaders(),
       });
       setEmployees(response.data);
@@ -101,7 +101,7 @@ const Evaluation = () => {
   // Fonction pour charger l'évaluation d'un employé
   const fetchEvaluation = async (employeeName) => {
     try {
-      const response = await axios.get(`${API_URL}/evaluation/${employeeName}`, {
+      const response = await axios.get(`${API_URL}/api/evaluation/${employeeName}`, {
         headers: getAuthHeaders(),
       });
       setEvaluation(response.data.evaluation || {
