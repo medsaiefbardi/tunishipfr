@@ -24,6 +24,7 @@ const Navbar = ({ role }) => {
           <>
             <li style={styles.navItem}>
               <Link to="/all-employees" style={styles.navLink}>EMPLOYES</Link>
+              <Link to="/register" style={styles.navLink}>AJOUTER EMP</Link>
             </li>
             <li style={styles.navItem}>
               <Link to="/manage-skills" style={styles.navLink}>COMPETENCES</Link>
@@ -35,7 +36,7 @@ const Navbar = ({ role }) => {
               <Link to="/skills-matrix" style={styles.navLink}>MATRICE</Link>
             </li>
             <li style={styles.navItem}>
-              <Link to="/evolution" style={styles.navLink}>Evolution</Link>
+              <Link to="/evaluation" style={styles.navLink}>EVALUATION</Link>
             </li>
           </>
         )}
