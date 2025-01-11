@@ -24,7 +24,9 @@ const Navbar = ({ role }) => {
           <>
             <li style={styles.navItem}>
               <Link to="/all-employees" style={styles.navLink}>EMPLOYES</Link>
-              <Link to="/register" style={styles.navLink}>AJOUTER EMP</Link>
+            </li>
+            <li style={styles.navItem}>
+            <Link to="/register" style={styles.navLink}>AJOUTER EMP</Link>
             </li>
             <li style={styles.navItem}>
               <Link to="/manage-skills" style={styles.navLink}>COMPETENCES</Link>
