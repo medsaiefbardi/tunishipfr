@@ -68,8 +68,10 @@ const Evaluation = () => {
   const [evaluation, setEvaluation] = useState({
     objectivesPerformance: [{ objective: '', target: '', result: '', P: '', O: '' }],
     objectivesCompetence: [{ objective: '', target: '', result: '', P: '', O: '' }],
+    objectivesGerance: [{ objective: '', target: '', result: '', P: '', O: '' }],
     totalPerformance: 0,
     totalCompetence: 0,
+    totalGerance: 0,
     totalEvaluation: 0,
   });
   const [error, setError] = useState(null);
@@ -107,8 +109,10 @@ const Evaluation = () => {
       setEvaluation(response.data.evaluation || {
         objectivesPerformance: [{ objective: '', target: '', result: '', P: '', O: '' }],
         objectivesCompetence: [{ objective: '', target: '', result: '', P: '', O: '' }],
+        objectivesGerance: [{ objective: '', target: '', result: '', P: '', O: '' }],
         totalPerformance: 0,
         totalCompetence: 0,
+        totalGerance: 0,
         totalEvaluation: 0,
       });
     } catch (err) {
@@ -130,12 +134,18 @@ const Evaluation = () => {
       const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
       return sum + O;
     }, 0);
+    const totalGerance = evaluation.objectivesGerance.reduce((sum, obj) => {
+      const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
+      const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
+      return sum + O;
+    }, 0);
   
     setEvaluation((prev) => ({
       ...prev,
       totalPerformance: totalPerformance.toFixed(2),
       totalCompetence: totalCompetence.toFixed(2),
-      totalEvaluation: (totalPerformance + totalCompetence).toFixed(2),
+      totalGerance: totalGerance.toFixed(2),
+      totalEvaluation: (totalPerformance + totalCompetence + totalGerance).toFixed(2),
     }));
   };
   
@@ -153,12 +163,18 @@ const Evaluation = () => {
         const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
         return sum + O;
       }, 0);
+      const totalGerance = evaluation.objectivesGerance.reduce((sum, obj) => {
+        const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
+        const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
+        return sum + O;
+      }, 0);
   
       const updatedEvaluation = {
         ...evaluation,
         totalPerformance: totalPerformance.toFixed(2),
         totalCompetence: totalCompetence.toFixed(2),
-        totalEvaluation: (totalPerformance + totalCompetence).toFixed(2),
+        totalGerance: totalGerance.toFixed(2),
+        totalEvaluation: (totalPerformance + totalCompetence + totalGerance).toFixed(2),
       };
   
       console.log('Payload envoyé au backend :', updatedEvaluation);
@@ -327,6 +343,54 @@ const Evaluation = () => {
                       type="number"
                       value={row.P}
                       onChange={(e) => handleInputChange('objectivesCompetence', index, 'P', e.target.value)}
+                    />
+                  </td>
+                  <td>{row.O}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <h2>Objectifs de Gerance</h2>
+          <Button onClick={() => addRow('objectivesGerance')}>Ajouter une ligne</Button>
+          <Table>
+            <thead>
+              <tr>
+                <th>Objectif</th>
+                <th>Cible</th>
+                <th>Résultat Réalisé</th>
+                <th>P (%)</th>
+                <th>O (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {evaluation.objectivesGerance.map((row, index) => (
+                <tr key={index}>
+                  <td>
+                    <input
+                      type="text"
+                      value={row.objective}
+                      onChange={(e) => handleInputChange('objectivesGerance', index, 'objective', e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.target}
+                      onChange={(e) => handleInputChange('objectivesGerance', index, 'target', e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.result}
+                      onChange={(e) => handleInputChange('objectivesGerance', index, 'result', e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.P}
+                      onChange={(e) => handleInputChange('objectivesGerance', index, 'P', e.target.value)}
                     />
                   </td>
                   <td>{row.O}</td>
