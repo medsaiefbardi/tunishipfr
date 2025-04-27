@@ -58,9 +58,16 @@ const Select = styled.select`
   width: 100%;
 `;
 
-const ErrorMessage = styled.p`
+const ErrorMessage = styled.div`
   color: red;
+  background-color: #ffe6e6;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid red;
+  border-radius: 5px;
 `;
+
+
 
 const Evaluation = () => {
   const [employees, setEmployees] = useState([]);
@@ -150,31 +157,13 @@ const Evaluation = () => {
   };
   
   const saveEvaluation = async () => {
+    calculateTotals();
+    if (!validateEvaluation()) {
+      return;
+    }
     try {
-      // Calcul des totaux avant soumission
-      const totalPerformance = evaluation.objectivesPerformance.reduce((sum, obj) => {
-        const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
-        const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
-        return sum + O;
-      }, 0);
-  
-      const totalCompetence = evaluation.objectivesCompetence.reduce((sum, obj) => {
-        const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
-        const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
-        return sum + O;
-      }, 0);
-      const totalGerance = evaluation.objectivesGerance.reduce((sum, obj) => {
-        const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
-        const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
-        return sum + O;
-      }, 0);
-  
       const updatedEvaluation = {
         ...evaluation,
-        totalPerformance: totalPerformance.toFixed(2),
-        totalCompetence: totalCompetence.toFixed(2),
-        totalGerance: totalGerance.toFixed(2),
-        totalEvaluation: (totalPerformance + totalCompetence + totalGerance).toFixed(2),
       };
   
       console.log('Payload envoyé au backend :', updatedEvaluation);
@@ -191,8 +180,29 @@ const Evaluation = () => {
       alert('Évaluation sauvegardée avec succès.');
     } catch (err) {
       console.error('Erreur lors de la sauvegarde de l\'évaluation :', err);
-      setError('Erreur lors de la sauvegarde.');
+      if (err.response && err.response.status === 404) {
+        setError('Employé non trouvé. Veuillez vérifier le nom de l\'employé.');
+      } else {
+        setError('Erreur lors de la sauvegarde. Veuillez réessayer.');
+      }
     }
+  };
+  const validateEvaluation = () => {
+    const allObjectives = [
+      ...evaluation.objectivesPerformance,
+      ...evaluation.objectivesCompetence,
+      ...evaluation.objectivesGerance,
+    ];
+  
+    for (const obj of allObjectives) {
+      if (!obj.objective || !obj.target || !obj.result || !obj.P) {
+        setError('Tous les champs des objectifs doivent être remplis.');
+        return false;
+      }
+    }
+  
+    setError(null);
+    return true;
   };
   // Gestion de la sélection d'un employé
   const handleEmployeeSelection = (event) => {
