@@ -1,419 +1,105 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
-
-// Styled Components
-const Container = styled.div`
-  padding: 20px;
-  background-color: #f0f8ff;
-  color: #2c3e50;
-  font-family: Arial, sans-serif;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  color: #3498db;
-`;
-
-const Button = styled.button`
-  background-color: #3498db;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 10px 0;
-
-  &:hover {
-    background-color: #2980b9;
-  }
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-
-  th {
-    background-color: #3498db;
-    color: white;
-  }
-
-  td input {
-    width: 90%;
-    padding: 5px;
-  }
-`;
-
-const Select = styled.select`
-  padding: 10px;
-  margin: 10px 0;
-  width: 100%;
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
-  background-color: #ffe6e6;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid red;
-  border-radius: 5px;
-`;
-
-
 
 const Evaluation = () => {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [evaluation, setEvaluation] = useState({
-    objectivesPerformance: [{ objective: '', target: '', result: '', P: '', O: '' }],
-    objectivesCompetence: [{ objective: '', target: '', result: '', P: '', O: '' }],
-    objectivesGerance: [{ objective: '', target: '', result: '', P: '', O: '' }],
-    totalPerformance: 0,
-    totalCompetence: 0,
-    totalGerance: 0,
-    totalEvaluation: 0,
-  });
+  const [evaluationTotal, setEvaluationTotal] = useState(0);
   const [error, setError] = useState(null);
-  const API_URL = process.env.REACT_APP_API_URL
-;
 
-  // Fonction pour obtenir les en-têtes d'authentification
-  const getAuthHeaders = () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('Token manquant. Veuillez vous connecter.');
-    }
-    return { Authorization: `Bearer ${token}` };
-  };
-
-  // Fonction pour charger les employés
-  const fetchEmployees = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/api/employees`, {
-        headers: getAuthHeaders(),
-      });
-      setEmployees(response.data);
-    } catch (err) {
-      console.error('Erreur lors du chargement des employés :', err);
-      setError('Impossible de charger les employés.');
-    }
-  };
-
-  // Fonction pour charger l'évaluation d'un employé
-  const fetchEvaluation = async (employeeName) => {
-    try {
-      const response = await axios.get(`${API_URL}/api/evaluation/${employeeName}`, {
-        headers: getAuthHeaders(),
-      });
-      setEvaluation(response.data.evaluation || {
-        objectivesPerformance: [{ objective: '', target: '', result: '', P: '', O: '' }],
-        objectivesCompetence: [{ objective: '', target: '', result: '', P: '', O: '' }],
-        objectivesGerance: [{ objective: '', target: '', result: '', P: '', O: '' }],
-        totalPerformance: 0,
-        totalCompetence: 0,
-        totalGerance: 0,
-        totalEvaluation: 0,
-      });
-    } catch (err) {
-      console.error('Erreur lors du chargement de l\'évaluation :', err);
-      setError('Erreur lors du chargement de l\'évaluation.');
-    }
-  };
-
-  // Fonction pour sauvegarder l'évaluation
-  const calculateTotals = () => {
-    const totalPerformance = evaluation.objectivesPerformance.reduce((sum, obj) => {
-      const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
-      const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
-      return sum + O;
-    }, 0);
-  
-    const totalCompetence = evaluation.objectivesCompetence.reduce((sum, obj) => {
-      const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
-      const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
-      return sum + O;
-    }, 0);
-    const totalGerance = evaluation.objectivesGerance.reduce((sum, obj) => {
-      const resultPercentage = (parseFloat(obj.result) / parseFloat(obj.target)) * 100 || 0;
-      const O = (resultPercentage * parseFloat(obj.P)) / 100 || 0;
-      return sum + O;
-    }, 0);
-  
-    setEvaluation((prev) => ({
-      ...prev,
-      totalPerformance: totalPerformance.toFixed(2),
-      totalCompetence: totalCompetence.toFixed(2),
-      totalGerance: totalGerance.toFixed(2),
-      totalEvaluation: (totalPerformance + totalCompetence + totalGerance).toFixed(2),
-    }));
-  };
-  
-  const saveEvaluation = async () => {
-    calculateTotals();
-    if (!validateEvaluation()) {
-      return;
-    }
-    try {
-      const updatedEvaluation = {
-        ...evaluation,
-      };
-  
-      console.log('Payload envoyé au backend :', updatedEvaluation);
-      console.log("emplyé",selectedEmployee);
-      const trimmedEmployeeName = selectedEmployee.trim()
-      const token = localStorage.getItem('token');
-      await axios.put(
-        `${API_URL}/evaluation/${trimmedEmployeeName}`,
-        updatedEvaluation,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-  
-      alert('Évaluation sauvegardée avec succès.');
-    } catch (err) {
-      console.error('Erreur lors de la sauvegarde de l\'évaluation :', err);
-      if (err.response && err.response.status === 404) {
-        setError('Employé non trouvé. Veuillez vérifier le nom de l\'employé.');
-      } else {
-        setError('Erreur lors de la sauvegarde. Veuillez réessayer.');
-      }
-    }
-  };
-  const validateEvaluation = () => {
-    const allObjectives = [
-      ...evaluation.objectivesPerformance,
-      ...evaluation.objectivesCompetence,
-      ...evaluation.objectivesGerance,
-    ];
-  
-    for (const obj of allObjectives) {
-      if (!obj.objective || isNaN(obj.target) || isNaN(obj.result) || isNaN(obj.P)) {
-        setError('Tous les champs des objectifs doivent être remplis et valides.');
-        return false;
-      }
-    }
-  
-    setError(null);
-    return true;
-  };
-  // Gestion de la sélection d'un employé
-  const handleEmployeeSelection = (event) => {
-    const employeeName = event.target.value;
-    setSelectedEmployee(employeeName);
-    fetchEvaluation(employeeName);
-  };
-
-  // Gestion des modifications dans les tableaux
-  const handleInputChange = (type, index, key, value) => {
-    const updatedObjectives = [...evaluation[type]];
-    updatedObjectives[index][key] = value;
-
-    if (key === 'result' || key === 'P') {
-      const resultPercentage =
-        (parseFloat(updatedObjectives[index].result) / parseFloat(updatedObjectives[index].target)) * 100 || 0;
-      const O = (resultPercentage * parseFloat(updatedObjectives[index].P)) / 100 || 0;
-      updatedObjectives[index].O = O.toFixed(2);
-    }
-
-    setEvaluation((prev) => ({
-      ...prev,
-      [type]: updatedObjectives,
-    }));
-  };
-
-  // Ajouter une nouvelle ligne dans un tableau
-  const addRow = (type) => {
-    setEvaluation((prev) => ({
-      ...prev,
-      [type]: [...prev[type], { objective: '', target: '', result: '', P: '', O: '' }],
-    }));
-  };
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    try {
-      fetchEmployees();
-    } catch (err) {
-      console.error('Erreur d\'authentification :', err);
-      setError(err.message);
+    const fetchEmployees = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_URL}/api/employees`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setEmployees(response.data);
+      } catch (err) {
+        console.error('Error fetching employees:', err);
+        setError('Failed to fetch employees.');
+      }
+    };
+
+    fetchEmployees();
+  }, [API_URL]);
+
+  const saveEvaluation = async () => {
+    if (!selectedEmployee) {
+      alert('Please select an employee.');
+      return;
     }
-  }, []);
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(
+        `${API_URL}/api/evaluation/${selectedEmployee}`,
+        { totalEvaluation: evaluationTotal },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert('Evaluation saved successfully.');
+    } catch (err) {
+      console.error('Error saving evaluation:', err);
+      setError('Failed to save evaluation.');
+    }
+  };
+
+  const calculateResult = () => {
+    const totalResult = parseFloat(document.getElementById('total-result').textContent) || 0;
+    setEvaluationTotal(totalResult.toFixed(2));
+  };
 
   return (
-    <Container>
-      <Title>Évaluation</Title>
+    <div>
+      <h1>Fiche d'évaluation</h1>
 
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <Select onChange={handleEmployeeSelection} value={selectedEmployee || ''}>
-        <option value="">-- Choisir un employé --</option>
+      <select onChange={(e) => setSelectedEmployee(e.target.value)} value={selectedEmployee || ''}>
+        <option value="">-- Select an Employee --</option>
         {employees.map((employee) => (
-          <option key={employee.name} value={employee.name}>
+          <option key={employee._id} value={employee.name}>
             {employee.name}
           </option>
         ))}
-      </Select>
+      </select>
 
-      {selectedEmployee && (
-        <>
-          <h2>Objectifs de Performance</h2>
-          <Button onClick={() => addRow('objectivesPerformance')}>Ajouter une ligne</Button>
-          <Table>
-            <thead>
-              <tr>
-                <th>Objectif</th>
-                <th>Cible</th>
-                <th>Résultat Réalisé</th>
-                <th>P (%)</th>
-                <th>O (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {evaluation.objectivesPerformance.map((row, index) => (
-                <tr key={index}>
-                  <td>
-                    <input
-                      type="text"
-                      value={row.objective}
-                      onChange={(e) => handleInputChange('objectivesPerformance', index, 'objective', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.target}
-                      onChange={(e) => handleInputChange('objectivesPerformance', index, 'target', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.result}
-                      onChange={(e) => handleInputChange('objectivesPerformance', index, 'result', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.P}
-                      onChange={(e) => handleInputChange('objectivesPerformance', index, 'P', e.target.value)}
-                    />
-                  </td>
-                  <td>{row.O}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+      <h2>Tableau d'Évaluation</h2>
+      <table id="table-evaluation">
+        <thead>
+          <tr>
+            <th>KPIs</th>
+            <th>Résultat Total</th>
+            <th>Pondération (%)</th>
+            <th>Résultat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Performance</td>
+            <td id="total-performance">0.00</td>
+            <td><input type="number" id="pond-performance" placeholder="%" onInput={calculateResult} /></td>
+            <td id="result-performance">0.00</td>
+          </tr>
+          <tr>
+            <td>Compétence</td>
+            <td id="total-competence">0.00</td>
+            <td><input type="number" id="pond-competence" placeholder="%" onInput={calculateResult} /></td>
+            <td id="result-competence">0.00</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="3">Total</td>
+            <td id="total-result">0.00</td>
+          </tr>
+        </tfoot>
+      </table>
 
-          <h2>Objectifs de Compétence</h2>
-          <Button onClick={() => addRow('objectivesCompetence')}>Ajouter une ligne</Button>
-          <Table>
-            <thead>
-              <tr>
-                <th>Objectif</th>
-                <th>Cible</th>
-                <th>Résultat Réalisé</th>
-                <th>P (%)</th>
-                <th>O (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {evaluation.objectivesCompetence.map((row, index) => (
-                <tr key={index}>
-                  <td>
-                    <input
-                      type="text"
-                      value={row.objective}
-                      onChange={(e) => handleInputChange('objectivesCompetence', index, 'objective', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.target}
-                      onChange={(e) => handleInputChange('objectivesCompetence', index, 'target', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.result}
-                      onChange={(e) => handleInputChange('objectivesCompetence', index, 'result', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.P}
-                      onChange={(e) => handleInputChange('objectivesCompetence', index, 'P', e.target.value)}
-                    />
-                  </td>
-                  <td>{row.O}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <h2>Objectifs de Gerance</h2>
-          <Button onClick={() => addRow('objectivesGerance')}>Ajouter une ligne</Button>
-          <Table>
-            <thead>
-              <tr>
-                <th>Objectif</th>
-                <th>Cible</th>
-                <th>Résultat Réalisé</th>
-                <th>P (%)</th>
-                <th>O (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {evaluation.objectivesGerance.map((row, index) => (
-                <tr key={index}>
-                  <td>
-                    <input
-                      type="text"
-                      value={row.objective}
-                      onChange={(e) => handleInputChange('objectivesGerance', index, 'objective', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.target}
-                      onChange={(e) => handleInputChange('objectivesGerance', index, 'target', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.result}
-                      onChange={(e) => handleInputChange('objectivesGerance', index, 'result', e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.P}
-                      onChange={(e) => handleInputChange('objectivesGerance', index, 'P', e.target.value)}
-                    />
-                  </td>
-                  <td>{row.O}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-
-          <Button onClick={saveEvaluation}>Soumettre</Button>
-        </>
-      )}
-    </Container>
+      <button onClick={saveEvaluation}>Save Evaluation</button>
+    </div>
   );
 };
 
