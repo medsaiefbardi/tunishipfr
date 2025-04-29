@@ -167,10 +167,11 @@ const Evaluation = () => {
       };
   
       console.log('Payload envoyé au backend :', updatedEvaluation);
-      console.log("emplyé",selectedEmployee)
+      console.log("emplyé",selectedEmployee);
+      const trimmedEmployeeName = selectedEmployee.trim()
       const token = localStorage.getItem('token');
       await axios.put(
-        `${API_URL}/evaluation/${selectedEmployee}`,
+        `${API_URL}/evaluation/${trimmedEmployeeName}`,
         updatedEvaluation,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -195,8 +196,8 @@ const Evaluation = () => {
     ];
   
     for (const obj of allObjectives) {
-      if (!obj.objective || !obj.target || !obj.result || !obj.P) {
-        setError('Tous les champs des objectifs doivent être remplis.');
+      if (!obj.objective || isNaN(obj.target) || isNaN(obj.result) || isNaN(obj.P)) {
+        setError('Tous les champs des objectifs doivent être remplis et valides.');
         return false;
       }
     }
