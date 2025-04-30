@@ -188,7 +188,7 @@ const Evaluation = () => {
       </table>
 
       {/* Garence Table */}
-      <h2 style={styles.subHeading}>Tableau des KPIs de Garence</h2>
+      <h2 style={styles.subHeading}>Tableau des KPIs de Gerance</h2>
       <table style={styles.table} id="table-garence">
         <thead>
           <tr>
@@ -250,7 +250,7 @@ const Evaluation = () => {
             <td style={styles.tableCell} id="result-competence">0.00</td>
           </tr>
           <tr>
-            <td style={styles.tableCell}>Garence</td>
+            <td style={styles.tableCell}>Gerance</td>
             <td style={styles.tableCell} id="total-garence">0.00</td>
             <td style={styles.tableCell}>
               <input type="number" id="pond-garence" placeholder="%" onInput={calculateResult} style={styles.input} />
