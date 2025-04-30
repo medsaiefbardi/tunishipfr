@@ -102,7 +102,7 @@ const HRHeadAllEmployees = () => {
                 <li key={employee._id} style={styles.listItem}>
                   <span>
                     {employee.name} - {employee.jobPosition?.title || 'N/A'} 
-                    {/* <strong> - Évaluation : {employee.evaluation?.totalEvaluation || 'Non évalué'}</strong> */}
+                    <strong> - Évaluation : {employee.evaluation?.totalEvaluation || 'Non évalué'}</strong>
                   </span>
                   <div>
                     <button onClick={() => handleSelectEmployee(employee)} style={styles.button}>MODIFIER</button>
