@@ -3,9 +3,9 @@ import axios from 'axios';
 
 const Evaluation = () => {
   const [employees, setEmployees] = useState([]);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState('');
   const [evaluationTotal, setEvaluationTotal] = useState(0);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   const API_URL = process.env.REACT_APP_API_URL;
 
@@ -27,10 +27,62 @@ const Evaluation = () => {
     fetchEmployees();
   }, [API_URL]);
 
+  // Add a new row to a table
+  const addRow = (tableId) => {
+    const table = document.getElementById(tableId).querySelector('tbody');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td><input type="text" placeholder="Nom KPI" /></td>
+      <td>
+        <input type="number" class="cible" placeholder="Cible" oninput="calculateResult()" />
+        <input type="number" class="resultat-realise" placeholder="Résultat Réalisé" oninput="calculateResult()" />
+        <input type="text" class="pourcentage" placeholder="%" readonly />
+      </td>
+      <td><input type="number" class="ponderation" placeholder="%" oninput="calculateResult()" /></td>
+    `;
+    table.appendChild(newRow);
+  };
+
+  // Calculate results and totals
+  const calculateResult = () => {
+    const calculateTableTotal = (tableId, totalId) => {
+      let total = 0;
+      document.querySelectorAll(`#${tableId} tbody tr`).forEach((row) => {
+        const cible = parseFloat(row.querySelector('.cible').value) || 0;
+        const resultatRealise = parseFloat(row.querySelector('.resultat-realise').value) || 0;
+        const ponderation = parseFloat(row.querySelector('.ponderation').value) || 0;
+
+        const pourcentage = (resultatRealise / cible) * 100;
+        row.querySelector('.pourcentage').value = isNaN(pourcentage) ? '' : pourcentage.toFixed(2) + '%';
+
+        const O = (resultatRealise / cible) * ponderation;
+        total += isNaN(O) ? 0 : O;
+      });
+      document.getElementById(totalId).textContent = total.toFixed(2);
+      return total;
+    };
+
+    const totalPerformance = calculateTableTotal('table-performance', 'total-performance');
+    const totalCompetence = calculateTableTotal('table-competence', 'total-competence');
+    const totalGarence = calculateTableTotal('table-garence', 'total-garence');
+
+    const pondPerformance = parseFloat(document.getElementById('pond-performance').value) / 100 || 0;
+    const pondCompetence = parseFloat(document.getElementById('pond-competence').value) / 100 || 0;
+    const pondGarence = parseFloat(document.getElementById('pond-garence').value) / 100 || 0;
+
+    const resultPerformance = totalPerformance * pondPerformance;
+    const resultCompetence = totalCompetence * pondCompetence;
+    const resultGarence = totalGarence * pondGarence;
+
+    const totalResult = resultPerformance + resultCompetence + resultGarence;
+    setEvaluationTotal(totalResult.toFixed(2));
+    document.getElementById('total-result').textContent = totalResult.toFixed(2);
+  };
+
   // Save evaluation
   const saveEvaluation = async () => {
     if (!selectedEmployee) {
-      alert('Please select an employee.');
+      alert('Veuillez sélectionner un employé.');
       return;
     }
 
@@ -41,27 +93,11 @@ const Evaluation = () => {
         { totalEvaluation: evaluationTotal },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert('Evaluation saved successfully.');
+      alert('Évaluation sauvegardée avec succès.');
     } catch (err) {
-      console.error('Error saving evaluation:', err);
-      setError('Failed to save evaluation.');
+      console.error('Erreur lors de la sauvegarde de l\'évaluation :', err);
+      setError('Échec de la sauvegarde de l\'évaluation.');
     }
-  };
-
-  // Calculate results and totals
-  const calculateResult = () => {
-    const totalPerformance = parseFloat(document.getElementById('total-performance').textContent) || 0;
-    const totalCompetence = parseFloat(document.getElementById('total-competence').textContent) || 0;
-
-    const pondPerformance = parseFloat(document.getElementById('pond-performance').value) / 100 || 0;
-    const pondCompetence = parseFloat(document.getElementById('pond-competence').value) / 100 || 0;
-
-    const resultPerformance = totalPerformance * pondPerformance;
-    const resultCompetence = totalCompetence * pondCompetence;
-
-    const totalResult = resultPerformance + resultCompetence;
-    setEvaluationTotal(totalResult.toFixed(2));
-    document.getElementById('total-result').textContent = totalResult.toFixed(2);
   };
 
   return (
@@ -75,7 +111,7 @@ const Evaluation = () => {
         value={selectedEmployee || ''}
         style={styles.select}
       >
-        <option value="">-- Select an Employee --</option>
+        <option value="">-- Sélectionnez un employé --</option>
         {employees.map((employee) => (
           <option key={employee._id} value={employee.name}>
             {employee.name}
@@ -83,6 +119,109 @@ const Evaluation = () => {
         ))}
       </select>
 
+      {/* Performance Table */}
+      <h2 style={styles.subHeading}>Tableau des KPIs de Performance</h2>
+      <table style={styles.table} id="table-performance">
+        <thead>
+          <tr>
+            <th style={styles.tableHeader}>Nom KPIs</th>
+            <th style={styles.tableHeader}>Niveau (Cible / Résultat Réalisé)</th>
+            <th style={styles.tableHeader}>Pondération</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" placeholder="Nom KPI" style={styles.input} /></td>
+            <td>
+              <input type="number" className="cible" placeholder="Cible" onInput={calculateResult} style={styles.input} />
+              <input type="number" className="resultat-realise" placeholder="Résultat Réalisé" onInput={calculateResult} style={styles.input} />
+              <input type="text" className="pourcentage" placeholder="%" readOnly style={styles.input} />
+            </td>
+            <td><input type="number" className="ponderation" placeholder="%" onInput={calculateResult} style={styles.input} /></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="2" style={styles.tableFooter}>Total</td>
+            <td id="total-performance" style={styles.tableFooter}>0.00</td>
+          </tr>
+          <tr>
+            <td colSpan="3" style={styles.tableFooter}>
+              <button onClick={() => addRow('table-performance')} style={styles.button}>Ajouter une ligne</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      {/* Competence Table */}
+      <h2 style={styles.subHeading}>Tableau des KPIs de Compétence</h2>
+      <table style={styles.table} id="table-competence">
+        <thead>
+          <tr>
+            <th style={styles.tableHeader}>Nom KPIs</th>
+            <th style={styles.tableHeader}>Niveau (Cible / Résultat Réalisé)</th>
+            <th style={styles.tableHeader}>Pondération</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" placeholder="Nom KPI" style={styles.input} /></td>
+            <td>
+              <input type="number" className="cible" placeholder="Cible" onInput={calculateResult} style={styles.input} />
+              <input type="number" className="resultat-realise" placeholder="Résultat Réalisé" onInput={calculateResult} style={styles.input} />
+              <input type="text" className="pourcentage" placeholder="%" readOnly style={styles.input} />
+            </td>
+            <td><input type="number" className="ponderation" placeholder="%" onInput={calculateResult} style={styles.input} /></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="2" style={styles.tableFooter}>Total</td>
+            <td id="total-competence" style={styles.tableFooter}>0.00</td>
+          </tr>
+          <tr>
+            <td colSpan="3" style={styles.tableFooter}>
+              <button onClick={() => addRow('table-competence')} style={styles.button}>Ajouter une ligne</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      {/* Garence Table */}
+      <h2 style={styles.subHeading}>Tableau des KPIs de Garence</h2>
+      <table style={styles.table} id="table-garence">
+        <thead>
+          <tr>
+            <th style={styles.tableHeader}>Nom KPIs</th>
+            <th style={styles.tableHeader}>Niveau (Cible / Résultat Réalisé)</th>
+            <th style={styles.tableHeader}>Pondération</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" placeholder="Nom KPI" style={styles.input} /></td>
+            <td>
+              <input type="number" className="cible" placeholder="Cible" onInput={calculateResult} style={styles.input} />
+              <input type="number" className="resultat-realise" placeholder="Résultat Réalisé" onInput={calculateResult} style={styles.input} />
+              <input type="text" className="pourcentage" placeholder="%" readOnly style={styles.input} />
+            </td>
+            <td><input type="number" className="ponderation" placeholder="%" onInput={calculateResult} style={styles.input} /></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="2" style={styles.tableFooter}>Total</td>
+            <td id="total-garence" style={styles.tableFooter}>0.00</td>
+          </tr>
+          <tr>
+            <td colSpan="3" style={styles.tableFooter}>
+              <button onClick={() => addRow('table-garence')} style={styles.button}>Ajouter une ligne</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      {/* Evaluation Total */}
       <h2 style={styles.subHeading}>Tableau d'Évaluation</h2>
       <table style={styles.table} id="table-evaluation">
         <thead>
@@ -98,13 +237,7 @@ const Evaluation = () => {
             <td style={styles.tableCell}>Performance</td>
             <td style={styles.tableCell} id="total-performance">0.00</td>
             <td style={styles.tableCell}>
-              <input
-                type="number"
-                id="pond-performance"
-                placeholder="%"
-                onInput={calculateResult}
-                style={styles.input}
-              />
+              <input type="number" id="pond-performance" placeholder="%" onInput={calculateResult} style={styles.input} />
             </td>
             <td style={styles.tableCell} id="result-performance">0.00</td>
           </tr>
@@ -112,28 +245,28 @@ const Evaluation = () => {
             <td style={styles.tableCell}>Compétence</td>
             <td style={styles.tableCell} id="total-competence">0.00</td>
             <td style={styles.tableCell}>
-              <input
-                type="number"
-                id="pond-competence"
-                placeholder="%"
-                onInput={calculateResult}
-                style={styles.input}
-              />
+              <input type="number" id="pond-competence" placeholder="%" onInput={calculateResult} style={styles.input} />
             </td>
             <td style={styles.tableCell} id="result-competence">0.00</td>
+          </tr>
+          <tr>
+            <td style={styles.tableCell}>Garence</td>
+            <td style={styles.tableCell} id="total-garence">0.00</td>
+            <td style={styles.tableCell}>
+              <input type="number" id="pond-garence" placeholder="%" onInput={calculateResult} style={styles.input} />
+            </td>
+            <td style={styles.tableCell} id="result-garence">0.00</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td style={styles.tableFooter} colSpan="3">Total</td>
-            <td style={styles.tableFooter} id="total-result">0.00</td>
+            <td colSpan="3" style={styles.tableFooter}>Total</td>
+            <td id="total-result" style={styles.tableFooter}>0.00</td>
           </tr>
         </tfoot>
       </table>
 
-      <button onClick={saveEvaluation} style={styles.button}>
-        Save Evaluation
-      </button>
+      <button onClick={saveEvaluation} style={styles.button}>Sauvegarder l'évaluation</button>
     </div>
   );
 };
