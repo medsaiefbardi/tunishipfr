@@ -43,6 +43,10 @@ const EmployeeProfile = () => {
           <table style={styles.table}>
             <tbody>
               <tr>
+                <td style={styles.tableCellHeader}>Évaluation Totale</td>
+                <td style={styles.tableCell}>{employee.evaluation?.totalEvaluation || 'Non évalué'}</td>
+              </tr>
+              <tr>
                 <td style={styles.tableCellHeader}>Intitulé du poste</td>
               </tr>
               <tr>
